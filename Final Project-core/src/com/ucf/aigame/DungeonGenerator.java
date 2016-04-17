@@ -5,17 +5,17 @@ import java.util.LinkedList;
 
 public class DungeonGenerator
 {
-    public static final int DUNGEON_WIDTH = 200;    // Change these to vary overall dungeon size dungeon
-    public static final int DUNGEON_HEIGHT = 200;
+    private static final int DUNGEON_WIDTH = 200;    // Change these to vary overall dungeon size dungeon
+    private static final int DUNGEON_HEIGHT = 200;
 
-    public static boolean[][] dungeonMap;   // True if wall, false if no wall, index is: [y-coordinate][x-coordinate]
-    public static LinkedList<Rectangle> roomList;   // Holds all rooms within the BSP, used to set dungeonMap values.
-    public static LinkedList<CartesianPoint> doorList;  // When paths are drawn, holds the coordinate value of the end of each path, used to cut a door into a wall
-    public static LinkedList<CartesianPoint> inOrderCellList;   // Holds the in-order BSP tree traversal top-left corner co-ordinate values of all cells (nodes) within the BSP
+    private boolean[][] dungeonMap;   // True if wall, false if no wall, index is: [y-coordinate][x-coordinate]
+    private LinkedList<Rectangle> roomList;   // Holds all rooms within the BSP, used to set dungeonMap values.
+    private LinkedList<CartesianPoint> doorList;  // When paths are drawn, holds the coordinate value of the end of each path, used to cut a door into a wall
+    private LinkedList<CartesianPoint> inOrderCellList;   // Holds the in-order BSP tree traversal top-left corner co-ordinate values of all cells (nodes) within the BSP
 
-    private static DungeonCell rootCell;    //Root of the BSP
+    private DungeonCell rootCell;    //Root of the BSP
 
-    public static void main( String[] args ) throws IOException
+    public DungeonGenerator() throws IOException
     {
         PrintWriter fileOut = new PrintWriter( "DungeonMap.txt" );  // Creates a DungeonMap.txt output file within the Assignment's folder
 
@@ -100,7 +100,7 @@ public class DungeonGenerator
 
 
     // Inserts cells into the BSP, then rooms at leaf cells
-    public static void insertRoom( DungeonCell dungeonCell )
+    public void insertRoom( DungeonCell dungeonCell )
     {
         if ( dungeonCell.insertDungeonRoom( ) )
         {
@@ -119,7 +119,7 @@ public class DungeonGenerator
     }
 
     //In-Order Traversal of the BSP
-    public static void inOrderTraversal( DungeonCell dungeonCell )
+    public void inOrderTraversal( DungeonCell dungeonCell )
     {
         if ( dungeonCell == null )
         {
@@ -132,7 +132,7 @@ public class DungeonGenerator
     }
 
     //Reverse-level traversal of the BSP
-    public static void traverseByLevel()
+    public void traverseByLevel()
     {
         int height = getHeight( rootCell );
 
@@ -143,7 +143,7 @@ public class DungeonGenerator
     }
 
     //Inserts a path to connect rooms between two children of the same level
-    public static void insertPathsByLevel( DungeonCell dungeonCell, int level )
+    public void insertPathsByLevel( DungeonCell dungeonCell, int level )
     {
         if ( dungeonCell == null )
         {
@@ -166,7 +166,7 @@ public class DungeonGenerator
     }
 
     //Returns height of the BSP containing DungeonCell nodes.
-    private static int getHeight( DungeonCell dungeonCell )
+    private int getHeight( DungeonCell dungeonCell )
     {
         if ( dungeonCell == null )
         {
@@ -187,7 +187,7 @@ public class DungeonGenerator
     }
 
     // Does the actual path-drawing. roomLists contain all rooms within one child of the subtree
-    public static void insertPath( LinkedList<Rectangle> roomList1, LinkedList<Rectangle> roomList2, int partitionType )
+    public void insertPath( LinkedList<Rectangle> roomList1, LinkedList<Rectangle> roomList2, int partitionType )
     {
         // Variables used to represent current position of the path-drawer
         int pathDrawerX = 0;
