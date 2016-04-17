@@ -381,3 +381,4 @@ public class DungeonGenerator
         doorList.add( new CartesianPoint( pathDrawerX, pathDrawerY) );
     }
 }
+
