@@ -15,12 +15,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class GameRenderer
 {
+	private static final int TILE_DIMENSIONS = 16;
+	
     private GameWorld gameWorld;
     private OrthographicCamera camera;
     private SpriteBatch batcher;
     private ShapeRenderer shapeRenderer;
     private BitmapFont bitmapFont;
     private Debugger debugger;
+    
+    private boolean[][] dungeonMap;
 
     private TextureRegion playerEntityTextureRegion;
     private TextureRegion gameEntityTextureRegion;
@@ -28,20 +32,29 @@ public class GameRenderer
     private Texture wallTileTexture;
 
     private PlayerEntity playerEntity;
+    
+    // CaveWall
+    public static TextureRegion topMiddleCaveWall;
+    public static TextureRegion topLeftCaveWall;
+    public static TextureRegion topRightCaveWall;
+    public static TextureRegion middleLeftCaveWall;
+    public static TextureRegion middleRightCaveWall;
+    public static TextureRegion bottomMiddleCaveWall;
+    public static TextureRegion bottomLeftCaveWall;
+    public static TextureRegion bottomRightCaveWall;
 
     private float gameWidth;
     private float gameHeight;
 
-    private static final float TILE_DIMENSIONS = 32;
-
     private float tempFloat = 0;
 
-    public GameRenderer(GameWorld gameWorld, Debugger debugger, float gameWidth, float gameHeight)
+    public GameRenderer(GameWorld gameWorld, DungeonGenerator dungeonGenerator, Debugger debugger, float gameWidth, float gameHeight)
     {
         this.gameWorld = gameWorld;
         this.debugger = debugger;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
+        dungeonMap = dungeonGenerator.getDungeonMap();
 
         //Sets Camera to Orthographic for 2D view of the screen.
         camera = new OrthographicCamera();
@@ -57,7 +70,7 @@ public class GameRenderer
 
         bitmapFont = new BitmapFont();
 
-        initializeGameAssets();
+        //initializeGameAssets();
         initializeAssets();
     }
 
@@ -66,8 +79,28 @@ public class GameRenderer
         //OpenGL graphics stuff
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        batcher.begin();
+        
+        // batcher.draw(topMiddleCaveWall, 64, 64);
+        
+        for ( int y = 0; y < gameHeight / TILE_DIMENSIONS; y++ )
+        {
+        	for ( int x = 0; x < gameWidth / TILE_DIMENSIONS; x++ )
+        	{
+        		if ( dungeonMap[y][x] == true )
+        		{
+            		batcher.draw( topMiddleCaveWall, x * TILE_DIMENSIONS, y * TILE_DIMENSIONS );
+        		}
+        	}
+        }
+        
+        
+        batcher.end();
+        
+    }
 
-        renderBackground();
+        /*renderBackground();
 
         renderPlayerEntity();
         renderGameEntities();
@@ -427,7 +460,7 @@ public class GameRenderer
     private void initializeGameAssets()
     {
         playerEntity = gameWorld.getPlayerEntity();
-    }
+    }*/
 
     private void initializeAssets()
     {
@@ -435,5 +468,6 @@ public class GameRenderer
         gameEntityTextureRegion = AssetLoader.gameEntityTextureRegion;
         wallTileTexture = AssetLoader.wallTileTexture;
         floorTileTexture = AssetLoader.floorTileTexture;
+        topMiddleCaveWall = AssetLoader.topMiddleCaveWall;
     }
 }

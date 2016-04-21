@@ -5,37 +5,40 @@ import java.util.LinkedList;
 
 public class DungeonGenerator
 {
-    public static final int DUNGEON_WIDTH = 200;    // Change these to vary overall dungeon size dungeon
-    public static final int DUNGEON_HEIGHT = 200;
+	private int dungeonWidth;	// Change these to vary overall dungeon size dungeon
+	private int dungeonHeight;
 
-    public static boolean[][] dungeonMap;   // True if wall, false if no wall, index is: [y-coordinate][x-coordinate]
-    public static LinkedList<Rectangle> roomList;   // Holds all rooms within the BSP, used to set dungeonMap values.
-    public static LinkedList<CartesianPoint> doorList;  // When paths are drawn, holds the coordinate value of the end of each path, used to cut a door into a wall
-    public static LinkedList<CartesianPoint> inOrderCellList;   // Holds the in-order BSP tree traversal top-left corner co-ordinate values of all cells (nodes) within the BSP
+    private static boolean[][] dungeonMap;   // True if wall, false if no wall, index is: [y-coordinate][x-coordinate]
+    private static LinkedList<Rectangle> roomList;   // Holds all rooms within the BSP, used to set dungeonMap values.
+    private static LinkedList<CartesianPoint> doorList;  // When paths are drawn, holds the coordinate value of the end of each path, used to cut a door into a wall
+    private static LinkedList<CartesianPoint> inOrderCellList;   // Holds the in-order BSP tree traversal top-left corner co-ordinate values of all cells (nodes) within the BSP
 
     private static DungeonCell rootCell;    //Root of the BSP
 
-    public static void main( String[] args ) throws IOException
+    public DungeonGenerator( int dungeonWidth, int dungeonHeight ) throws IOException
     {
+    	this.dungeonWidth = dungeonWidth;
+    	this.dungeonHeight = dungeonHeight;
+    	
         PrintWriter fileOut = new PrintWriter( "DungeonMap.txt" );  // Creates a DungeonMap.txt output file within the Assignment's folder
 
         // Initialize private variables
-        dungeonMap = new boolean[ DUNGEON_HEIGHT ][ DUNGEON_WIDTH ];
+        dungeonMap = new boolean[ dungeonHeight ][ dungeonWidth ];
         roomList = new LinkedList<Rectangle>();
         doorList = new LinkedList<CartesianPoint>();
         inOrderCellList = new LinkedList<CartesianPoint>();
 
         // Make sure all spaces within the map are initially set to false (0).
-        for ( int y = 0; y < DUNGEON_HEIGHT; y++ )
+        for ( int y = 0; y < dungeonHeight; y++ )
         {
-            for ( int x = 0; x < DUNGEON_WIDTH; x++ )
+            for ( int x = 0; x < dungeonWidth; x++ )
             {
                 dungeonMap[y][x] = false;
             }
         }
 
         // Initialize the BSP root cell, then insert it into the BSP
-        rootCell = new DungeonCell( new Rectangle( 0, DUNGEON_HEIGHT, DUNGEON_WIDTH, DUNGEON_HEIGHT ) );
+        rootCell = new DungeonCell( new Rectangle( 0, dungeonHeight, dungeonWidth, dungeonHeight ) );
         insertRoom( rootCell ); // This will completely fill the BSP
 
         // Iterate over filled roomList and set all coordinates of walls of rooms to true.
@@ -78,9 +81,9 @@ public class DungeonGenerator
         }
 
         // Print the dungeonMap to file output.
-        for ( int y = DUNGEON_HEIGHT - 1; y >= 0; y-- )
+        for ( int y = dungeonHeight - 1; y >= 0; y-- )
         {
-            for ( int x = 0; x < DUNGEON_WIDTH; x++ )
+            for ( int x = 0; x < dungeonWidth; x++ )
             {
                 if ( dungeonMap[y][x] )
                 {
@@ -379,5 +382,10 @@ public class DungeonGenerator
 
         //Store coordinates of room entrance path drawing ended at.
         doorList.add( new CartesianPoint( pathDrawerX, pathDrawerY) );
+    }
+    
+    public boolean[][] getDungeonMap()
+    {
+    	return dungeonMap;
     }
 }

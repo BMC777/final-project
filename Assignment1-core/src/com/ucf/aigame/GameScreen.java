@@ -1,5 +1,7 @@
 package com.ucf.aigame;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
@@ -8,14 +10,17 @@ import com.badlogic.gdx.Screen;
  */
 public class GameScreen implements Screen
 {
+	private static final int TILE_DIMENSIONS = 16;
+	
     private GameWorld gameWorld;
+    private DungeonGenerator dungeonGenerator;
     private GameRenderer gameRenderer;
     private CollisionDetector collisionDetector;
     private Debugger debugger;
 
     private float runTime;
 
-    public GameScreen()
+    public GameScreen() throws IOException
     {
         // Set dimensions
         float screenWidth = Gdx.graphics.getWidth();
@@ -25,14 +30,15 @@ public class GameScreen implements Screen
 
         // Instantiate universal objects
         gameWorld = new GameWorld(midPointX, midPointY, screenWidth, screenHeight);
-        collisionDetector = new CollisionDetector(gameWorld);
-        debugger = new Debugger(gameWorld);
-        gameRenderer = new GameRenderer(gameWorld, debugger, screenWidth, screenHeight);
+        dungeonGenerator = new DungeonGenerator((int)( screenWidth / TILE_DIMENSIONS ), (int)( screenHeight / TILE_DIMENSIONS ));
+        collisionDetector = new CollisionDetector( gameWorld );
+        debugger = new Debugger( gameWorld );
+        gameRenderer = new GameRenderer( gameWorld, dungeonGenerator, debugger, screenWidth, screenHeight );
 
         PlayerEntity playerEntity = gameWorld.getPlayerEntity();
 
         // For player input
-        InputHandler inputHandler = new InputHandler(playerEntity, debugger);
+        InputHandler inputHandler = new InputHandler( playerEntity, debugger );
         Gdx.input.setInputProcessor(inputHandler);
     }
 

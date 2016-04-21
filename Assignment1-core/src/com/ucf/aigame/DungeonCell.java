@@ -12,16 +12,16 @@ import java.util.Random;
 public class DungeonCell
 {
     // The closer these values are to the minimum room dimensions, the less variation there will be in room placement within a cell
-    private static final int MINIMUM_CELL_WIDTH = 35;
-    private static final int MINIMUM_CELL_HEIGHT = 35;
+    private static final int MINIMUM_CELL_WIDTH = 6;
+    private static final int MINIMUM_CELL_HEIGHT = 6;
 
     // The closer these values are to minimum cell dimensions, the less variation there will be in room sizes
-    public static final int MINIMUM_ROOM_WIDTH = 16;
-    public static final int MINIMUM_ROOM_HEIGHT = 16;
+    public static final int MINIMUM_ROOM_WIDTH = 4;
+    public static final int MINIMUM_ROOM_HEIGHT = 4;
 
     // The larger the value, the greater the possible room sizes and rooms placement options
-    public static final int MAXIMUM_CELL_WIDTH = 75;
-    public static final int MAXIMUM_CELL_HEIGHT = 75;
+    public static final int MAXIMUM_CELL_WIDTH = 32;
+    public static final int MAXIMUM_CELL_HEIGHT = 32;
 
     private Rectangle boundingBox;  // Bounds the dimensions of this cell
     private Rectangle dungeonRoom;  // If this cell is a leaf cell in the BSP, it will contain a room
