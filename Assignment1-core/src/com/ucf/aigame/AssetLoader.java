@@ -23,7 +23,7 @@ public class AssetLoader
     public static TextureRegion playerEntityTextureRegion;
     public static TextureRegion gameEntityTextureRegion;
     
-    // CaveWall
+    // Cave Walls
     public static TextureRegion topMiddleCaveWall;
     public static TextureRegion topLeftCaveWall;
     public static TextureRegion topRightCaveWall;
@@ -32,6 +32,9 @@ public class AssetLoader
     public static TextureRegion bottomMiddleCaveWall;
     public static TextureRegion bottomLeftCaveWall;
     public static TextureRegion bottomRightCaveWall;
+    
+    // Dirt Floors
+    public static TextureRegion dirtFloor3;
     
     public static void load()
     {
@@ -48,6 +51,7 @@ public class AssetLoader
         
         // CaveWall initialization
         topMiddleCaveWall = new TextureRegion( spriteSheet, 11 + ( TILE_DIMENSIONS * 10), 0, TILE_DIMENSIONS, TILE_DIMENSIONS );
+        dirtFloor3 = new TextureRegion( spriteSheet, 18 + ( TILE_DIMENSIONS * 17 ), 13 + ( TILE_DIMENSIONS * 12 ), TILE_DIMENSIONS, TILE_DIMENSIONS );
     }
 
     public static void dispose()

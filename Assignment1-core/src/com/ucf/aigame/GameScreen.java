@@ -29,17 +29,18 @@ public class GameScreen implements Screen
         int midPointY = (int)(screenHeight / 2);
 
         // Instantiate universal objects
-        gameWorld = new GameWorld(midPointX, midPointY, screenWidth, screenHeight);
-        dungeonGenerator = new DungeonGenerator((int)( screenWidth / TILE_DIMENSIONS ), (int)( screenHeight / TILE_DIMENSIONS ));
-        collisionDetector = new CollisionDetector( gameWorld );
-        debugger = new Debugger( gameWorld );
+        dungeonGenerator = new DungeonGenerator( (int)( screenWidth / TILE_DIMENSIONS ), (int)( screenHeight / TILE_DIMENSIONS ) );
+        
+        gameWorld = new GameWorld( midPointX, midPointY, screenWidth, screenHeight, dungeonGenerator );
+        //collisionDetector = new CollisionDetector( gameWorld );
+        //debugger = new Debugger( gameWorld );
         gameRenderer = new GameRenderer( gameWorld, dungeonGenerator, debugger, screenWidth, screenHeight );
 
-        PlayerEntity playerEntity = gameWorld.getPlayerEntity();
+        //PlayerEntity playerEntity = gameWorld.getPlayerEntity();
 
         // For player input
-        InputHandler inputHandler = new InputHandler( playerEntity, debugger );
-        Gdx.input.setInputProcessor(inputHandler);
+        //InputHandler inputHandler = new InputHandler( playerEntity, debugger );
+        //Gdx.input.setInputProcessor(inputHandler);
     }
 
     @Override
@@ -53,9 +54,9 @@ public class GameScreen implements Screen
     {
         runTime += delta;
         gameWorld.update(delta);
-        collisionDetector.checkCollisions();
+        //collisionDetector.checkCollisions();
         gameRenderer.render(runTime);
-        debugger.update();
+        //debugger.update();
     }
 
     @Override

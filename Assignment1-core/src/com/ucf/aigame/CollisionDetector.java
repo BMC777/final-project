@@ -34,7 +34,7 @@ public class CollisionDetector
 
     CollisionDetector (GameWorld gameWorld)
     {
-        // Get all GameWorld Objects
+        /*// Get all GameWorld Objects
         this.playerEntity = gameWorld.getPlayerEntity();
         this.wallList = gameWorld.getWallList();
         this.entityList = gameWorld.getEntityList();
@@ -47,10 +47,10 @@ public class CollisionDetector
         scalingSensor = new Vector2();
 
         intersector = new Intersector();
-        collisionDetectionArray = new boolean[4];
+        collisionDetectionArray = new boolean[4];*/
     }
 
-    public void checkCollisions()
+    /*public void checkCollisions()
     {
         // Reset all collision detections
         for (int x = 0; x < 4; x++)
@@ -142,8 +142,9 @@ public class CollisionDetector
                 playerEntity.setWallSensorCollisionIndex(j, changedSensor);
             }
 
-        }
+        }*/
 
+    	/*
         // Cycle through all non-player entities in the game
         for (int i = 0; i < entityList.size(); i++) {
             // Check collision between AdjacentAgentSensor and GameEntity
@@ -154,5 +155,5 @@ public class CollisionDetector
                 entityList.get(i).setDetection(false);
             }
         }
-    }
+    }*/
 }

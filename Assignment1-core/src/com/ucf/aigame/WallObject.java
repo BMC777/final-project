@@ -1,11 +1,26 @@
 package com.ucf.aigame;
-
-
-import com.badlogic.gdx.math.Rectangle;
-
 /**
  * Created by Bryan on 2/8/2016.
  */
+
+
+public class WallObject
+{
+	private Rectangle boundingBox;
+	
+	public WallObject( Rectangle boundingBox )
+	{
+		this.boundingBox = boundingBox;
+	}
+	
+	public Rectangle getBoundingBox()
+	{
+		return boundingBox;
+	}
+}
+/*import com.badlogic.gdx.math.Rectangle;
+
+
 public class WallObject
 {
     private Rectangle collisionBox;
@@ -49,4 +64,4 @@ public class WallObject
     {
         return collisionBox;
     }
-}
+}*/

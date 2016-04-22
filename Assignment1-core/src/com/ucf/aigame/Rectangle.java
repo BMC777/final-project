@@ -1,7 +1,5 @@
 package com.ucf.aigame;
 
-import java.util.LinkedList;
-
 /**
  * Rectangle objects stores x,y integer coordinate values of the top-left corner of a rectangle,
  * along with it's width and height.

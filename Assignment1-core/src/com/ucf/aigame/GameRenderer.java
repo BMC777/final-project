@@ -25,6 +25,7 @@ public class GameRenderer
     private Debugger debugger;
     
     private boolean[][] dungeonMap;
+    private boolean[][] floorMap;
 
     private TextureRegion playerEntityTextureRegion;
     private TextureRegion gameEntityTextureRegion;
@@ -33,15 +34,18 @@ public class GameRenderer
 
     private PlayerEntity playerEntity;
     
-    // CaveWall
-    public static TextureRegion topMiddleCaveWall;
-    public static TextureRegion topLeftCaveWall;
-    public static TextureRegion topRightCaveWall;
-    public static TextureRegion middleLeftCaveWall;
-    public static TextureRegion middleRightCaveWall;
-    public static TextureRegion bottomMiddleCaveWall;
-    public static TextureRegion bottomLeftCaveWall;
-    public static TextureRegion bottomRightCaveWall;
+    // Cave Walls
+    private static TextureRegion topMiddleCaveWall;
+    private static TextureRegion topLeftCaveWall;
+    private static TextureRegion topRightCaveWall;
+    private static TextureRegion middleLeftCaveWall;
+    private static TextureRegion middleRightCaveWall;
+    private static TextureRegion bottomMiddleCaveWall;
+    private static TextureRegion bottomLeftCaveWall;
+    private static TextureRegion bottomRightCaveWall;
+    
+    // Dirt Floors
+    private static TextureRegion dirtFloor3;
 
     private float gameWidth;
     private float gameHeight;
@@ -55,6 +59,7 @@ public class GameRenderer
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
         dungeonMap = dungeonGenerator.getDungeonMap();
+        floorMap = dungeonGenerator.getFloorMap();
 
         //Sets Camera to Orthographic for 2D view of the screen.
         camera = new OrthographicCamera();
@@ -82,8 +87,6 @@ public class GameRenderer
         
         batcher.begin();
         
-        // batcher.draw(topMiddleCaveWall, 64, 64);
-        
         for ( int y = 0; y < gameHeight / TILE_DIMENSIONS; y++ )
         {
         	for ( int x = 0; x < gameWidth / TILE_DIMENSIONS; x++ )
@@ -92,12 +95,15 @@ public class GameRenderer
         		{
             		batcher.draw( topMiddleCaveWall, x * TILE_DIMENSIONS, y * TILE_DIMENSIONS );
         		}
+        		
+        		if ( floorMap[y][x] == true )
+        		{
+        			batcher.draw( dirtFloor3, x * TILE_DIMENSIONS, y * TILE_DIMENSIONS );
+        		}
         	}
         }
         
-        
         batcher.end();
-        
     }
 
         /*renderBackground();
@@ -468,6 +474,8 @@ public class GameRenderer
         gameEntityTextureRegion = AssetLoader.gameEntityTextureRegion;
         wallTileTexture = AssetLoader.wallTileTexture;
         floorTileTexture = AssetLoader.floorTileTexture;
+        
         topMiddleCaveWall = AssetLoader.topMiddleCaveWall;
+        dirtFloor3 = AssetLoader.dirtFloor3;
     }
 }

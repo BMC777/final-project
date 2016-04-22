@@ -9,6 +9,8 @@ public class DungeonGenerator
 	private int dungeonHeight;
 
     private static boolean[][] dungeonMap;   // True if wall, false if no wall, index is: [y-coordinate][x-coordinate]
+    private static boolean[][] floorMap;	// Map of all floor spaces
+    
     private static LinkedList<Rectangle> roomList;   // Holds all rooms within the BSP, used to set dungeonMap values.
     private static LinkedList<CartesianPoint> doorList;  // When paths are drawn, holds the coordinate value of the end of each path, used to cut a door into a wall
     private static LinkedList<CartesianPoint> inOrderCellList;   // Holds the in-order BSP tree traversal top-left corner co-ordinate values of all cells (nodes) within the BSP
@@ -24,6 +26,8 @@ public class DungeonGenerator
 
         // Initialize private variables
         dungeonMap = new boolean[ dungeonHeight ][ dungeonWidth ];
+        floorMap = new boolean[ dungeonHeight ][ dungeonWidth ];
+        
         roomList = new LinkedList<Rectangle>();
         doorList = new LinkedList<CartesianPoint>();
         inOrderCellList = new LinkedList<CartesianPoint>();
@@ -34,6 +38,7 @@ public class DungeonGenerator
             for ( int x = 0; x < dungeonWidth; x++ )
             {
                 dungeonMap[y][x] = false;
+                floorMap[y][x] = false;
             }
         }
 
@@ -55,6 +60,25 @@ public class DungeonGenerator
                 dungeonMap[roomList.get( i ).getY() - y][roomList.get( i ).getX()] = true;
                 dungeonMap[roomList.get( i ).getY() - y][roomList.get( i ).getX() + roomList.get( i ).getWidth()] = true;
             }
+            
+            for ( int y = 1; y < roomList.get( i ).getHeight(); y++ )
+            {
+            	for ( int x = 1; x < roomList.get( i ).getWidth(); x++ )
+            	{
+            		floorMap[roomList.get( i ).getY() - y][roomList.get( i ).getX() + x] = true;
+            	}
+            }
+            
+            /*int interiorX = roomList.get( i ).getX() + 1;
+            int interiorY = roomList.get( i ).getY() - 1;
+            
+            for ( ; interiorX < interiorX + roomList.get( i ).getWidth() - 1; interiorX++ )
+            {
+            	for ( ; interiorY > interiorY - roomList.get( i ).getHeight() + 1; interiorY-- )
+            	{
+            		dungeonMap[interiorY][interiorX] = true;
+            	}
+            }*/
         }
 
         traverseByLevel();  // This will traverse the tree from bottom level to top, drawing paths between rooms along the way
@@ -244,6 +268,7 @@ public class DungeonGenerator
             // Path drawing will stop if a wall is encountered
             while ( !dungeonMap[pathDrawerY][pathDrawerX] )
             {
+            	floorMap[pathDrawerY][pathDrawerX] = true;
                 // Draws path to the right until path hits a wall or is at the same y-value of the center of the target room
                 if (pathDrawerX < leftMostRoom.getX() + Math.round(leftMostRoom.getWidth() / 2))
                 {
@@ -335,6 +360,7 @@ public class DungeonGenerator
             // Path drawing will stop if a wall is encountered
             while (!dungeonMap[pathDrawerY][pathDrawerX])
             {
+            	floorMap[pathDrawerY][pathDrawerX] = true;
                 // Draws path upwards until path hits a wall or is at the same x-value of the center of the target room
                 if (pathDrawerY < downMostRoom.getY() - Math.round(downMostRoom.getHeight() / 2))
                 {
@@ -382,10 +408,16 @@ public class DungeonGenerator
 
         //Store coordinates of room entrance path drawing ended at.
         doorList.add( new CartesianPoint( pathDrawerX, pathDrawerY) );
+        floorMap[pathDrawerY][pathDrawerX] = true;
     }
     
     public boolean[][] getDungeonMap()
     {
     	return dungeonMap;
+    }
+    
+    public boolean[][] getFloorMap()
+    {
+    	return floorMap;
     }
 }
