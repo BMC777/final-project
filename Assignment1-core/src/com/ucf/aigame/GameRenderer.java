@@ -120,8 +120,7 @@ public class GameRenderer
             batcher.draw(gameEntityTextureRegion, gameWorld.getEntityList().get(i).getCurrentXPosition(),
                     gameWorld.getEntityList().get(i).getCurrentYPosition(),
                     gameWorld.getEntityList().get(i).getXEntityOrigin(), gameWorld.getEntityList().get(i).getYEntityOrigin(),
-                    gameWorld.getEntityList().get(i).getWidth(), gameWorld.getEntityList().get(i).getHeight(),
-                    1, 1, gameWorld.getEntityList().get(i).getRotationAngle());
+                    TILE_DIMENSIONS, TILE_DIMENSIONS, 1, 1, gameWorld.getEntityList().get(i).getRotationAngle());
         }
 
         batcher.end();
@@ -133,7 +132,7 @@ public class GameRenderer
 
         //Drawing the playerEntityTexture
         batcher.draw(playerEntityTextureRegion, playerEntity.getCurrentXPosition(), playerEntity.getCurrentYPosition(),
-                playerEntity.getXPlayerOrigin(), playerEntity.getYPlayerOrigin(), playerEntity.getWidth(), playerEntity.getHeight(),
+                playerEntity.getXPlayerOrigin(), playerEntity.getYPlayerOrigin(), TILE_DIMENSIONS, TILE_DIMENSIONS,
                 1, 1, playerEntity.getRotationAngle());
 
         batcher.end();

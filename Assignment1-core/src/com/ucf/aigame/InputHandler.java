@@ -10,14 +10,11 @@ import com.badlogic.gdx.InputProcessor;
 public class InputHandler implements InputProcessor
 {
     private PlayerEntity playerEntity;
-    private Debugger debugger;
 
-    public InputHandler(PlayerEntity playerEntity, Debugger debugger)
+    public InputHandler( PlayerEntity playerEntity )
     {
         this.playerEntity = playerEntity;
-        this.debugger = debugger;
-
-        playerEntity.setController(this);
+        //playerEntity.setController(this);
     }
 
     @Override
@@ -39,22 +36,6 @@ public class InputHandler implements InputProcessor
 
             case Keys.D:
                 playerEntity.moveRight();
-                return true;
-
-            case Keys.V:
-                debugger.setDebugDisplayState(!debugger.getDebugDisplayState());
-                return true;
-
-            case Keys.P:
-                debugger.setWallToolStatus(!debugger.getWallToolStatus());
-                return true;
-
-            case Keys.O:
-                debugger.setEntityToolStatus(!debugger.getEntityToolStatus());
-                return true;
-
-            case Keys.Q:
-                playerEntity.getAStarSearch().setSearchStatus( !playerEntity.getAStarSearch().getSearchStatus() );
                 return true;
         }
 
@@ -95,6 +76,7 @@ public class InputHandler implements InputProcessor
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
+    	/*
         if (button == Input.Buttons.LEFT && debugger.getDebugDisplayState() && debugger.getWallToolStatus())
         {
             debugger.placeWallTool(screenX, 640 - screenY);
@@ -105,7 +87,7 @@ public class InputHandler implements InputProcessor
         {
             debugger.placeEntityTool(screenX, 640 - screenY);
             return true;
-        }
+        }*/
 
         return false;
     }
@@ -125,9 +107,8 @@ public class InputHandler implements InputProcessor
     @Override
     public boolean mouseMoved(int screenX, int screenY)
     {
-        // Follow mouse if search is OFF
-        if ( !playerEntity.getAStarSearch().getSearchStatus() )
-            playerEntity.rotateToFaceMouse(screenX, 640 - screenY);
+    	playerEntity.rotateToFaceMouse(screenX, 640 - screenY);
+    	
         return true;
     }
 

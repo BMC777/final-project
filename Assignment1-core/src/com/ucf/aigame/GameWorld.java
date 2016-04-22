@@ -51,6 +51,7 @@ public class GameWorld
         {
         	for ( int x = 0; x < gameWidth / TILE_DIMENSIONS; x++ )
         	{
+        		// Inserting walls into the gameWorld
         		if ( dungeonMap[y][x] )
         		{
             		wallObjectArrayList.add( new WallObject( new Rectangle( TILE_DIMENSIONS * x, TILE_DIMENSIONS * y, TILE_DIMENSIONS, TILE_DIMENSIONS ) ) );
@@ -59,7 +60,7 @@ public class GameWorld
                 if ( floorMap[y][x] && !summonedPlayer )
                 {
                     //System.out.println("Player summoned at "+x+" : "+y);
-                    playerEntity = new PlayerEntity(x*TILE_DIMENSIONS, y*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, this);
+                    playerEntity = new PlayerEntity(x * TILE_DIMENSIONS, y * TILE_DIMENSIONS, this);
                     System.out.println("Player summoned at "+playerEntity.getTiledPositionVector());
                     summonedPlayer = true;
                 }

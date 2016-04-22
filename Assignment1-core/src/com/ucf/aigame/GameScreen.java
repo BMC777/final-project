@@ -36,9 +36,15 @@ public class GameScreen implements Screen
         //debugger = new Debugger( gameWorld );
         gameRenderer = new GameRenderer( gameWorld, dungeonGenerator, debugger, screenWidth, screenHeight );
 
-        //PlayerEntity playerEntity = gameWorld.getPlayerEntity();
+        PlayerEntity playerEntity = gameWorld.getPlayerEntity();
 
         // For player input
+        
+        InputHandler inputHandler = new InputHandler( playerEntity );
+        Gdx.input.setInputProcessor( inputHandler );
+        
+        
+        //---Old Code---
         //InputHandler inputHandler = new InputHandler( playerEntity, debugger );
         //Gdx.input.setInputProcessor(inputHandler);
     }
