@@ -54,7 +54,7 @@ public class Debugger
 
     public void placeEntityTool(float x, float y)
     {
-        gameWorld.newEntity(x, y);
+        //gameWorld.newEntity(x, y);
     }
 
     public boolean getEntityToolStatus()
@@ -72,7 +72,7 @@ public class Debugger
 
     public void placeWallTool(float x, float y)
     {
-        gameWorld.newWall(x, y);
+        //gameWorld.newWall(x, y);
     }
 
     public void setWallToolStatus(boolean status)

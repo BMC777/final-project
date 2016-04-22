@@ -37,6 +37,7 @@ public class PlayerEntity
     private float yPlayerOrigin;
     private float xCurrentWorldPosition;
     private float yCurrentWorldPosition;
+    private int tile_dimensions;
 
     private float rotationAngle; //Angle between current and next Heading
 
@@ -51,14 +52,16 @@ public class PlayerEntity
 
     PlayerEntity(float xCurrentWorldPosition, float yCurrentWorldPosition, float playerWidth, float playerHeight, GameWorld gameWorld)
     {
+
+        this.tile_dimensions = gameWorld.getTileDimensions();
         //Player Sprite dimensions
         this.playerWidth = playerWidth;
         this.playerHeight = playerHeight;
 
         // GOAL for A* Search :: 1 < x < 38 , 1 < y < 18
-        this.goalLocation = new Vector2( playerWidth*38 - 16, playerWidth*18 - 16);
+        //this.goalLocation = new Vector2( playerWidth*38 - 16, playerWidth*18 - 16);
 
-        aStarSearch = new AStarSearch(this, gameWorld.goalLocation, gameWorld);
+        //aStarSearch = new AStarSearch(this, gameWorld.goalLocation, gameWorld);
 
         //Center of the Sprite
         this.xPlayerOrigin = playerWidth / 2;
@@ -73,11 +76,11 @@ public class PlayerEntity
         currentPlayerVelocity = new Vector2();                      //Velocity is initially 0
         nextPlayerVelocity = new Vector2(currentPlayerVelocity);
 
-        wallSensor = new WallSensor(playerWidth * 6);
+        //wallSensor = new WallSensor(playerWidth * 6);
         collisionBox = new Rectangle(xCurrentWorldPosition, yCurrentWorldPosition, playerWidth, playerHeight);
 
-        radar = new AdjacentAgentSensor(playerWidth * 6, xCurrentWorldPosition+xPlayerOrigin, yCurrentWorldPosition+yPlayerOrigin);
-        pieSliceSensor = new PieSliceSensor(currentPlayerHeading, playerWidth * 6);
+        //radar = new AdjacentAgentSensor(playerWidth * 6, xCurrentWorldPosition+xPlayerOrigin, yCurrentWorldPosition+yPlayerOrigin);
+        //pieSliceSensor = new PieSliceSensor(currentPlayerHeading, playerWidth * 6);
 
 
     }
@@ -187,6 +190,16 @@ public class PlayerEntity
         return yCurrentWorldPosition;
     }
 
+    public Vector2 getPositionVector()
+    {
+        return new Vector2(xCurrentWorldPosition, yCurrentWorldPosition);
+    }
+
+    public Vector2 getTiledPositionVector()
+    {
+        return new Vector2(xCurrentWorldPosition/tile_dimensions, yCurrentWorldPosition/tile_dimensions);
+    }
+
     public float getRotationAngle()
     {
         return rotationAngle;
@@ -202,6 +215,11 @@ public class PlayerEntity
         return playerHeight;
     }
 
+    public Vector2 getDimensionVector()
+    {
+        return new Vector2(playerWidth, playerHeight);
+    }
+
     public float getXPlayerOrigin()
     {
         return xPlayerOrigin;
@@ -210,6 +228,11 @@ public class PlayerEntity
     public float getYPlayerOrigin()
     {
         return yPlayerOrigin;
+    }
+
+    public Vector2 getOriginVector()
+    {
+        return new Vector2(xPlayerOrigin, yPlayerOrigin);
     }
 
     public float getWallSensorEndpointX(int i)

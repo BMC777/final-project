@@ -1,5 +1,7 @@
 package com.ucf.aigame;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * CartesianPoint objects hold an x and y integer representing a point on a
  * 2D coordinate plane.
@@ -24,5 +26,10 @@ public class CartesianPoint
     public int getY()
     {
         return y;
+    }
+
+    public Vector2 getCoords()
+    {
+        return new Vector2(x, y);
     }
 }

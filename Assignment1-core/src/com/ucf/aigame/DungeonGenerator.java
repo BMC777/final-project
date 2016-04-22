@@ -420,4 +420,9 @@ public class DungeonGenerator
     {
     	return floorMap;
     }
+
+    public LinkedList<CartesianPoint> getDoorList()
+    {
+        return doorList;
+    }
 }

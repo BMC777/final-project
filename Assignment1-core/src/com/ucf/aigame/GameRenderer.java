@@ -1,7 +1,6 @@
 package com.ucf.aigame;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -58,6 +57,8 @@ public class GameRenderer
         this.debugger = debugger;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
+        this.playerEntity = gameWorld.getPlayerEntity();
+
         dungeonMap = dungeonGenerator.getDungeonMap();
         floorMap = dungeonGenerator.getFloorMap();
 
@@ -103,6 +104,38 @@ public class GameRenderer
         	}
         }
         
+        batcher.end();
+
+        renderGameEntities();
+        renderPlayerEntity();
+    }
+
+    private void renderGameEntities()
+    {
+        batcher.begin();
+
+        for (int i = 0; i < gameWorld.getEntityList().size(); i++)
+        {
+
+            batcher.draw(gameEntityTextureRegion, gameWorld.getEntityList().get(i).getCurrentXPosition(),
+                    gameWorld.getEntityList().get(i).getCurrentYPosition(),
+                    gameWorld.getEntityList().get(i).getXEntityOrigin(), gameWorld.getEntityList().get(i).getYEntityOrigin(),
+                    gameWorld.getEntityList().get(i).getWidth(), gameWorld.getEntityList().get(i).getHeight(),
+                    1, 1, gameWorld.getEntityList().get(i).getRotationAngle());
+        }
+
+        batcher.end();
+    }
+
+    private void renderPlayerEntity()
+    {
+        batcher.begin();
+
+        //Drawing the playerEntityTexture
+        batcher.draw(playerEntityTextureRegion, playerEntity.getCurrentXPosition(), playerEntity.getCurrentYPosition(),
+                playerEntity.getXPlayerOrigin(), playerEntity.getYPlayerOrigin(), playerEntity.getWidth(), playerEntity.getHeight(),
+                1, 1, playerEntity.getRotationAngle());
+
         batcher.end();
     }
 
