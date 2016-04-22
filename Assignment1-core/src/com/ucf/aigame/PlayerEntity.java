@@ -1,7 +1,6 @@
 package com.ucf.aigame;
 
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -9,8 +8,10 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class PlayerEntity
 {
+	private static final int PLAYER_DIMENSIONS = 16;
+	
     // Sensors and collisions
-    private Rectangle collisionBox;
+    private BoundingBox boundingBox;
     private WallSensor wallSensor;
     private AdjacentAgentSensor radar;
     private PieSliceSensor pieSliceSensor;
@@ -31,32 +32,33 @@ public class PlayerEntity
     private int inputY;
 
     // Global and local positioning
-    private float playerWidth;
-    private float playerHeight;
+    //private float playerWidth;
+    //private float playerHeight;
+    
     private float xPlayerOrigin;
     private float yPlayerOrigin;
     private float xCurrentWorldPosition;
     private float yCurrentWorldPosition;
-    private int tile_dimensions;
+    //private int tile_dimensions;
 
     private float rotationAngle; //Angle between current and next Heading
 
-    private Vector2 goalLocation;
+    //private Vector2 goalLocation;
 
     private static final float BASE_VELOCITY = 125;
     private static final Vector2 REFERENCE_VECTOR = new Vector2(1, 0);  //Normalized Vector pointing to 0 degrees
 
     private static final float MAX_SPEED = 250;
 
-    private AStarSearch aStarSearch;
+    //private AStarSearch aStarSearch;
 
-    PlayerEntity(float xCurrentWorldPosition, float yCurrentWorldPosition, float playerWidth, float playerHeight, GameWorld gameWorld)
+    PlayerEntity( float xCurrentWorldPosition, float yCurrentWorldPosition, GameWorld gameWorld )
     {
 
-        this.tile_dimensions = gameWorld.getTileDimensions();
+        //this.tile_dimensions = gameWorld.getTileDimensions();
         //Player Sprite dimensions
-        this.playerWidth = playerWidth;
-        this.playerHeight = playerHeight;
+        //this.playerWidth = playerWidth;
+        //this.playerHeight = playerHeight;
 
         // GOAL for A* Search :: 1 < x < 38 , 1 < y < 18
         //this.goalLocation = new Vector2( playerWidth*38 - 16, playerWidth*18 - 16);
@@ -64,20 +66,20 @@ public class PlayerEntity
         //aStarSearch = new AStarSearch(this, gameWorld.goalLocation, gameWorld);
 
         //Center of the Sprite
-        this.xPlayerOrigin = playerWidth / 2;
-        this.yPlayerOrigin = playerHeight / 2;
+        this.xPlayerOrigin = PLAYER_DIMENSIONS / 2;
+        this.yPlayerOrigin = PLAYER_DIMENSIONS / 2;
 
         //Spawn Position
         this.xCurrentWorldPosition = xCurrentWorldPosition;
         this.yCurrentWorldPosition = yCurrentWorldPosition;
 
-        currentPlayerHeading = new Vector2(REFERENCE_VECTOR);       //Player always spawns facing 'East'
-        nextPlayerHeading = new Vector2(currentPlayerHeading);
-        currentPlayerVelocity = new Vector2();                      //Velocity is initially 0
-        nextPlayerVelocity = new Vector2(currentPlayerVelocity);
+        currentPlayerHeading = new Vector2( REFERENCE_VECTOR );		//Player always spawns facing 'East'
+        nextPlayerHeading = new Vector2( currentPlayerHeading );
+        currentPlayerVelocity = new Vector2();						//Velocity is initially 0
+        nextPlayerVelocity = new Vector2( currentPlayerVelocity );
 
         //wallSensor = new WallSensor(playerWidth * 6);
-        collisionBox = new Rectangle(xCurrentWorldPosition, yCurrentWorldPosition, playerWidth, playerHeight);
+        boundingBox = new BoundingBox(xCurrentWorldPosition, yCurrentWorldPosition, PLAYER_DIMENSIONS, PLAYER_DIMENSIONS);
 
         //radar = new AdjacentAgentSensor(playerWidth * 6, xCurrentWorldPosition+xPlayerOrigin, yCurrentWorldPosition+yPlayerOrigin);
         //pieSliceSensor = new PieSliceSensor(currentPlayerHeading, playerWidth * 6);
@@ -85,26 +87,26 @@ public class PlayerEntity
 
     }
 
-    public void update(float timeSinceLastUpdate)
+    public void update( float timeSinceLastUpdate )
     {
         //aStarSearch.update();
 
-        currentPlayerHeading.set(nextPlayerHeading);    //Update to new calculated heading
-        rotationAngle = currentPlayerHeading.angle();   //Angle of the new heading with respect to X axis.
+        currentPlayerHeading.set(nextPlayerHeading);    // Update to new calculated heading
+        rotationAngle = currentPlayerHeading.angle();   // Angle of the new heading with respect to X axis.
 
-        nextPlayerVelocity.set(inputX, inputY);         //Velocity initialized to basic input velocities
+        nextPlayerVelocity.set(inputX, inputY);         // Velocity initialized to basic input velocities
 
         if (inputX != 0 && inputY != 0)
         {
-            nextPlayerVelocity.scl(0.5f);               //Diagonal movement should not be faster
+            nextPlayerVelocity.scl(0.5f);               // Diagonal movement should not be faster
         }
 
-        nextPlayerVelocity.scl(BASE_VELOCITY);          //Applying the velocity magnitude
-        nextPlayerVelocity.rotate(rotationAngle - 90);  //Rotating the vector to match the Sprite
-        nextPlayerVelocity.limit(MAX_SPEED);            //
-        currentPlayerVelocity.set(nextPlayerVelocity);  //Update the current velocity
+        nextPlayerVelocity.scl( BASE_VELOCITY );        // Applying the velocity magnitude
+        nextPlayerVelocity.rotate(rotationAngle - 90);  // Rotating the vector to match the Sprite
+        nextPlayerVelocity.limit( MAX_SPEED );
+        currentPlayerVelocity.set(nextPlayerVelocity);  // Update the current velocity
 
-        if (currentlyHaveCollision)
+        /*if (currentlyHaveCollision)
         {
             if (collisionUp && currentPlayerVelocity.y > 0)
                 currentPlayerVelocity.y = 0;
@@ -117,21 +119,19 @@ public class PlayerEntity
 
             if (collisionRight && currentPlayerHeading.x > 0)
                 currentPlayerVelocity.x = 0;
-        }
+        }*/
 
         //Update World position, scaling velocity over timeSinceLastUpdate
         xCurrentWorldPosition += currentPlayerVelocity.x * timeSinceLastUpdate;
         yCurrentWorldPosition += currentPlayerVelocity.y * timeSinceLastUpdate;
 
-        collisionBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
-        //wallSensor.update(currentPlayerHeading);
+        boundingBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
+        wallSensor.update(currentPlayerHeading);
 
-        //radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
-        //pieSliceSensor.update(currentPlayerHeading);
+        radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
+        pieSliceSensor.update(currentPlayerHeading);
 
-        currentlyHaveCollision = false;
-
-
+        //currentlyHaveCollision = false;
     }
 
     //Updated by InputHandler
@@ -197,7 +197,7 @@ public class PlayerEntity
 
     public Vector2 getTiledPositionVector()
     {
-        return new Vector2(xCurrentWorldPosition/tile_dimensions, yCurrentWorldPosition/tile_dimensions);
+        return new Vector2(xCurrentWorldPosition / PLAYER_DIMENSIONS, yCurrentWorldPosition / PLAYER_DIMENSIONS );
     }
 
     public float getRotationAngle()
@@ -205,7 +205,7 @@ public class PlayerEntity
         return rotationAngle;
     }
 
-    public float getWidth()
+    /*public float getWidth()
     {
         return playerWidth;
     }
@@ -218,7 +218,7 @@ public class PlayerEntity
     public Vector2 getDimensionVector()
     {
         return new Vector2(playerWidth, playerHeight);
-    }
+    }*/
 
     public float getXPlayerOrigin()
     {
@@ -280,9 +280,9 @@ public class PlayerEntity
         return wallSensor.getCollisionValue(index);
     }
 
-    public Rectangle getCollisionBox()
+    public BoundingBox getBoundingBox()
     {
-        return collisionBox;
+        return boundingBox;
     }
 
     public void setCollisionDetection(boolean collisionUp, boolean collisionDown, boolean collisionLeft, boolean collisionRight)
@@ -299,7 +299,7 @@ public class PlayerEntity
     }
 
     public Vector2 getvOrigin() {
-        return radar.getCenter();
+        return radar.getvOrigin();
     }
 
     public Vector2 getCurrentHeading() {
@@ -307,18 +307,18 @@ public class PlayerEntity
     }
 
     public Circle getAdjecentAgentSensor() {
-        return radar.getCircle();
+        return radar.getSensor();
     }
 
     public PieSliceSensor getPieSliceSensor() {
         return pieSliceSensor;
     }
 
-    public void setController(InputHandler ctrl) {
-        //aStarSearch.setInputHandler(ctrl);
+    /*public void setController(InputHandler ctrl) {
+        aStarSearch.setInputHandler(ctrl);
     }
 
     public AStarSearch getAStarSearch() {
         return aStarSearch;
-    }
+    }*/
 }
