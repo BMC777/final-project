@@ -58,7 +58,6 @@ public class GameWorld
 
                 if ( floorMap[y][x] && !summonedPlayer )
                 {
-                    //System.out.println("Player summoned at "+x+" : "+y);
                     playerEntity = new PlayerEntity(x*TILE_DIMENSIONS, y*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, this);
                     System.out.println("Player summoned at "+playerEntity.getTiledPositionVector());
                     summonedPlayer = true;
@@ -279,7 +278,8 @@ public class GameWorld
                 }
 
 
-                gameEntityArrayList.add(new GameEntity(x*TILE_DIMENSIONS, y*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS));
+                gameEntityArrayList.add( new GameEntity(new Vector2(x*TILE_DIMENSIONS, y*TILE_DIMENSIONS),
+                        new Vector2(TILE_DIMENSIONS, TILE_DIMENSIONS)) );
                 //System.out.println("Monster spawned at: " + x + " : " + y);
                 monsterDelay++;
                 monsterDelayCounter = 1;

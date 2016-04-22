@@ -87,7 +87,7 @@ public class PlayerEntity
 
     public void update(float timeSinceLastUpdate)
     {
-        aStarSearch.update();
+        //aStarSearch.update();
 
         currentPlayerHeading.set(nextPlayerHeading);    //Update to new calculated heading
         rotationAngle = currentPlayerHeading.angle();   //Angle of the new heading with respect to X axis.
@@ -124,10 +124,10 @@ public class PlayerEntity
         yCurrentWorldPosition += currentPlayerVelocity.y * timeSinceLastUpdate;
 
         collisionBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
-        wallSensor.update(currentPlayerHeading);
+        //wallSensor.update(currentPlayerHeading);
 
-        radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
-        pieSliceSensor.update(currentPlayerHeading);
+        //radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
+        //pieSliceSensor.update(currentPlayerHeading);
 
         currentlyHaveCollision = false;
 
@@ -299,7 +299,7 @@ public class PlayerEntity
     }
 
     public Vector2 getvOrigin() {
-        return radar.getvOrigin();
+        return radar.getCenter();
     }
 
     public Vector2 getCurrentHeading() {
@@ -307,7 +307,7 @@ public class PlayerEntity
     }
 
     public Circle getAdjecentAgentSensor() {
-        return radar.getSensor();
+        return radar.getCircle();
     }
 
     public PieSliceSensor getPieSliceSensor() {
@@ -315,7 +315,7 @@ public class PlayerEntity
     }
 
     public void setController(InputHandler ctrl) {
-        aStarSearch.setInputHandler(ctrl);
+        //aStarSearch.setInputHandler(ctrl);
     }
 
     public AStarSearch getAStarSearch() {

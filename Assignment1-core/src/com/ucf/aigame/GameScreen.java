@@ -1,9 +1,9 @@
 package com.ucf.aigame;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+
+import java.io.IOException;
 
 /**
  * Created by Bryan on 1/21/2016.
@@ -39,7 +39,7 @@ public class GameScreen implements Screen
         //PlayerEntity playerEntity = gameWorld.getPlayerEntity();
 
         // For player input
-        //InputHandler inputHandler = new InputHandler( playerEntity, debugger );
+        //InputHandler inputHandler = new InputHandler( gameWorld.getPlayerEntity(), debugger );
         //Gdx.input.setInputProcessor(inputHandler);
     }
 
