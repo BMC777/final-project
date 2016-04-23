@@ -41,7 +41,7 @@ public class GameScreen implements Screen
         // For player input
         InputHandler inputHandler = new InputHandler( playerEntity );
         Gdx.input.setInputProcessor( inputHandler );
-        
+
     }
 
     @Override

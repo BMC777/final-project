@@ -127,13 +127,8 @@ public class PlayerEntity
         boundingBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
         // wallSensor.update(currentPlayerHeading);
 
-<<<<<<< HEAD
         //radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
         //pieSliceSensor.update(currentPlayerHeading);
-=======
-        // radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
-        // pieSliceSensor.update(currentPlayerHeading);
->>>>>>> 3b065ee878e3a1819bda20c822d7d21a75e6edce
 
         // currentlyHaveCollision = false;
     }
