@@ -14,6 +14,7 @@ public class GameEntity
     private boolean detected;
 
     private AdjacentAgentSensor adjacentAgentSensor;
+    private Movement movement;
 
     private Vector2 currentEntityHeading;   //Direction entity is facing (Should always be Normalized)
     private Vector2 nextEntityHeading;
@@ -54,12 +55,28 @@ public class GameEntity
 
         // Sensors
         adjacentAgentSensor = new AdjacentAgentSensor(dimensions.x*2, centerOfEntity);
+
+        this.movement = new Movement();
     }
 
     public void update(float timeSinceLastUpdate)
     {
         currentEntityHeading.set(nextEntityHeading);    //Update to new calculated heading
         rotationAngle = currentEntityHeading.angle();   //Angle new heading was rotated by.
+
+        /*/ Transform this to be GameEntity compatible
+        nextPlayerVelocity.set(inputX, inputY);         // Velocity initialized to basic input velocities
+
+        if (inputX != 0 && inputY != 0)
+        {
+            nextPlayerVelocity.scl(0.5f);               // Diagonal movement should not be faster
+        }
+
+        nextPlayerVelocity.scl( BASE_VELOCITY );        // Applying the velocity magnitude
+        nextPlayerVelocity.rotate(rotationAngle - 90);  // Rotating the vector to match the Sprite
+        nextPlayerVelocity.limit( MAX_SPEED );
+        currentPlayerVelocity.set(nextPlayerVelocity);  // Update the current velocity
+        // */
 
         boundingBox.setPosition(position.x, position.y);
     }
@@ -127,5 +144,29 @@ public class GameEntity
 
     public boolean isDetected() {
         return detected;
+    }
+
+    public void moveLeft()
+    {
+        inputX -= 1;
+    }
+
+    public void moveRight()
+    {
+        inputX += 1;
+    }
+
+    public void moveUp()
+    {
+        inputY += 1;
+    }
+
+    public void moveDown()
+    {
+        inputY -= 1;
+    }
+
+    public void stop() {
+        inputX = inputY = 0;
     }
 }

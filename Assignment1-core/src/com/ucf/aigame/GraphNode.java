@@ -1,5 +1,7 @@
 package com.ucf.aigame;
 
+import com.badlogic.gdx.math.Vector2;
+
 import java.util.ArrayList;
 
 /**
@@ -7,32 +9,38 @@ import java.util.ArrayList;
  */
 public class GraphNode {
 
-    private float xWorldPosition;
-    private float yWorldPosition;
+    private Vector2 position;
     private boolean visited;
-    private ArrayList<GraphNode> edges;
+    private ArrayList<GraphNode> neighbors;
     private GraphNode parent;
     private float movementCost;
     private float heuristicCost;
 
-    public GraphNode (float xWorldPosition, float yWorldPosition) {
+    public GraphNode (Vector2 worldPosition) {
 
-        this.xWorldPosition = xWorldPosition;
-        this.yWorldPosition = yWorldPosition;
+        this.position = worldPosition;
 
         this.visited = false;
-        this.edges = new ArrayList<GraphNode>();
+        this.neighbors = new ArrayList<GraphNode>();
         this.parent = null;
         this.movementCost = 0;
         this.heuristicCost = -1;
     }
 
     public float getxWorldPosition() {
-        return this.xWorldPosition;
+        return position.x;
     }
 
     public float getyWorldPosition() {
-        return this.yWorldPosition;
+        return position.y;
+    }
+
+    public Vector2 getCenteredPos() {
+        return position;
+    }
+
+    public Vector2 getTiledPosition() {
+        return new Vector2(position.x-8, position.y-8);
     }
 
     public boolean isVisited() {
@@ -71,8 +79,8 @@ public class GraphNode {
         return ( this.parent );
     }
 
-    public ArrayList<GraphNode> getEdges() {
-        return this.edges;
+    public ArrayList<GraphNode> getNeighbors() {
+        return this.neighbors;
     }
 
 

@@ -196,7 +196,7 @@ public class AStarSearch {
             match = isMatch(list, list.get(i).getxWorldPosition()+addX, list.get(i).getyWorldPosition()+addY);
             // If match, add that GraphNode
             if ( match != null ) {
-                list.get(i).getEdges().add( match );
+                list.get(i).getNeighbors().add( match );
             }
 
             // Check South
@@ -205,7 +205,7 @@ public class AStarSearch {
             match = isMatch(list, list.get(i).getxWorldPosition()+addX, list.get(i).getyWorldPosition()+addY);
             // If match, add that GraphNode
             if ( match != null ) {
-                list.get(i).getEdges().add( match );
+                list.get(i).getNeighbors().add( match );
             }
 
             // Check East
@@ -214,7 +214,7 @@ public class AStarSearch {
             match = isMatch(list, list.get(i).getxWorldPosition()+addX, list.get(i).getyWorldPosition()+addY);
             // If match, add that GraphNode
             if ( match != null ) {
-                list.get(i).getEdges().add( match );
+                list.get(i).getNeighbors().add( match );
             }
 
             // Check West
@@ -223,7 +223,7 @@ public class AStarSearch {
             match = isMatch(list, list.get(i).getxWorldPosition()+addX, list.get(i).getyWorldPosition()+addY);
             // If match, add that GraphNode
             if ( match != null ) {
-                list.get(i).getEdges().add( match );
+                list.get(i).getNeighbors().add( match );
             }
 
         }
@@ -277,8 +277,8 @@ public class AStarSearch {
         ArrayList<GraphNode> unvisitedNodes = new ArrayList<GraphNode>();
         ArrayList<GraphNode> visitedNodes = new ArrayList<GraphNode>();
 
-        GraphNode currentNode = new GraphNode(start.x, start.y);
-        GraphNode goalNode = new GraphNode(goal.x, goal.y);
+        GraphNode currentNode = new GraphNode(start);
+        GraphNode goalNode = new GraphNode(goal);
 
         // Temporary variables used for readability throughout function
         GraphNode tempNode;
@@ -299,7 +299,7 @@ public class AStarSearch {
         }
 
         // Return if failed to find GraphNode with start (x, y) position
-        if ( currentNode.getEdges().size() == 0) {
+        if ( currentNode.getNeighbors().size() == 0) {
             displayAIStatus("Error: startNode not found or has zero edges");
             return ( null );
         }
@@ -322,9 +322,9 @@ public class AStarSearch {
             // */
 
             // Go through neighbors of current node
-            for (int i = 0; i < currentNode.getEdges().size(); i++) {
+            for (int i = 0; i < currentNode.getNeighbors().size(); i++) {
 
-                tempNode = currentNode.getEdges().get(i);
+                tempNode = currentNode.getNeighbors().get(i);
 
                 // Skip neighbor node if already visited
                 if ( visitedNodes.contains( tempNode ) ) {

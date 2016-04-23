@@ -1,6 +1,7 @@
 package com.ucf.aigame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -109,9 +110,9 @@ public class GameRenderer
 
         renderGameEntities();
         renderPlayerEntity();
-
+        renderGraphNodes();
         
-        shapeRenderer.begin( ShapeType.Line );
+        shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(1, 1, 0, 1 );
         
         for ( int i = 0; i < gameWorld.getEntityList().size(); i++ )
@@ -200,6 +201,65 @@ public class GameRenderer
         }
 
         shapeRenderer.end();
+    }
+
+    private void renderGraphNodes()
+    {
+
+        /*
+        Color nodeColor = Color.CYAN;
+        Color pathColor = Color.ORANGE;
+        Color targetColor = Color.YELLOW;
+
+        int circleSize = 2;
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(nodeColor);
+
+        for (int i = 0; i < gameWorld.getGraphNodeList().size(); i++) {
+
+            // Regular node
+            if ( !(gameWorld.getGraphNodeList().get(i).getxWorldPosition() == gameWorld.getPlayerEntity().getAStarSearch().getGoalLocation().x
+                    && gameWorld.getGraphNodeList().get(i).getyWorldPosition() == gameWorld.getPlayerEntity().getAStarSearch().getGoalLocation().y) ) {
+
+                if ( gameWorld.getGraphNodeList().get(i).isVisited() ) {
+                    shapeRenderer.setColor(pathColor);
+                    circleSize = 5;
+                }
+                else {
+                    shapeRenderer.setColor(nodeColor);
+                    circleSize  = 2;
+                }
+
+                shapeRenderer.circle(gameWorld.getGraphNodeList().get(i).getxWorldPosition(),
+                        gameWorld.getGraphNodeList().get(i).getyWorldPosition(), circleSize);
+            }
+            // Node matches Target Node; show difference (defined by playerEntity, stored in aStarSearch)
+            else {
+                circleSize = 10;
+                shapeRenderer.setColor(targetColor);
+
+                shapeRenderer.circle(gameWorld.getGraphNodeList().get(i).getxWorldPosition(),
+                        gameWorld.getGraphNodeList().get(i).getyWorldPosition(), circleSize);
+
+            }
+        }
+
+        shapeRenderer.end();
+        // */
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.CYAN);
+
+        for (int i = 0; i < gameWorld.getGraphNodeList().size(); i++)
+        {
+            GraphNode graphNode = gameWorld.getGraphNodeList().get(i);
+
+            shapeRenderer.circle(graphNode.getCenteredPos().x, graphNode.getCenteredPos().y, 2);
+        }
+
+        shapeRenderer.end();
+
     }
 
         /*renderBackground();

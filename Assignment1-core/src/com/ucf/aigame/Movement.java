@@ -13,33 +13,36 @@ public class Movement {
     private Vector2 target;
     private ArrayList<Vector2> waypoints;
 
-    private enum Mode {
-        STAND, WANDER, PURSUIT
-    }
+    // Defines current action
+    private enum Mode { STAND, WANDER, PURSUIT }
     private Mode currentMode;
 
-    private enum State {
-        IDLE, CALCULATE, NEXT, SEEK, RESET, ERROR
-    }
+    // Defines current state of current action
+    private enum State { IDLE, CALCULATE, NEXT, SEEK, RESET, ERROR }
     private State currentState;
 
-    public Movement(Vector2 goal) {
+    // For wander()
+    private float wanderRadius = 10;
+    private float wanderDistance = 10;
+    private float wanderJitter = 2;
 
-        this.start = new Vector2(0,0);
-        this.target = goal;
+    public Movement() {
+
+        this.start = new Vector2();
+        this.target = new Vector2();
         this.waypoints = new ArrayList<Vector2>();
         this.currentMode = Mode.STAND;
         this.currentState = State.IDLE;
     }
 
-    public void update() {
+    public void update(Vector2 start) {
 
-        switch( this.currentMode ) {
+        switch( currentMode ) {
             case STAND:
                 break;
 
             case WANDER:
-                wander();
+                wander(start);
                 break;
 
             case PURSUIT:
@@ -47,11 +50,34 @@ public class Movement {
                 break;
 
             default:
+                System.out.println("**Case defaulted in Movement.update()!!**");
                 break;
         }
     }
 
-    private void wander() {
+    public void wander(Vector2 start) {
+        switch( currentState ) {
+            case CALCULATE:
+                break;
+
+            case NEXT:
+                break;
+
+            case SEEK:
+                break;
+
+            case RESET:
+                break;
+
+            case ERROR:
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void pursuit() {
         switch( this.currentState ) {
             case CALCULATE:
                 break;
@@ -73,26 +99,9 @@ public class Movement {
         }
     }
 
-    private void pursuit() {
-        switch( this.currentState ) {
-            case CALCULATE:
-                break;
+    private void calculateWander(Vector2 start)
+    {
 
-            case NEXT:
-                break;
-
-            case SEEK:
-                break;
-
-            case RESET:
-                break;
-
-            case ERROR:
-                break;
-
-            default:
-                break;
-        }
     }
 
     public Vector2 getStart() {
