@@ -1,6 +1,5 @@
 package com.ucf.aigame;
 
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -128,8 +127,8 @@ public class PlayerEntity
         boundingBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
         // wallSensor.update(currentPlayerHeading);
 
-        // radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
-        // pieSliceSensor.update(currentPlayerHeading);
+        //radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
+        //pieSliceSensor.update(currentPlayerHeading);
 
         // currentlyHaveCollision = false;
     }
@@ -298,17 +297,26 @@ public class PlayerEntity
         this.currentlyHaveCollision = currentlyHaveCollision;
     }
 
+    /*
     public Vector2 getvOrigin() {
         return radar.getvOrigin();
+    }
+    // */
+
+    public Vector2 getCenter()
+    {
+        return new Vector2(xCurrentWorldPosition+PLAYER_DIMENSIONS, yCurrentWorldPosition+PLAYER_DIMENSIONS);
     }
 
     public Vector2 getCurrentHeading() {
         return currentPlayerHeading;
     }
 
+    /*
     public Circle getAdjecentAgentSensor() {
         return radar.getSensor();
     }
+    // */
 
     public PieSliceSensor getPieSliceSensor() {
         return pieSliceSensor;

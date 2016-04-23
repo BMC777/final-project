@@ -59,7 +59,6 @@ public class GameWorld
 
                 if ( floorMap[y][x] && !summonedPlayer )
                 {
-                    //System.out.println("Player summoned at "+x+" : "+y);
                     playerEntity = new PlayerEntity(x * TILE_DIMENSIONS, y * TILE_DIMENSIONS, this);
                     System.out.println("Player summoned at "+playerEntity.getTiledPositionVector());
                     summonedPlayer = true;
@@ -271,8 +270,7 @@ public class GameWorld
                 // If entity is 'near' the player, do not spawn
                 currentCoords.x -= playerEntity.getTiledPositionVector().x;
                 currentCoords.y -= playerEntity.getTiledPositionVector().y;
-                //System.out.print("dist: "+Math.abs( currentCoords.x + currentCoords.y )+" from ");
-                //System.out.println( currentCoords );
+
                 if ( Math.abs( currentCoords.x + currentCoords.y ) <= nearBoundary )
                 {
                     System.out.println("Too close at "+(int)Math.abs( currentCoords.x + currentCoords.y )+" spaces!");
@@ -280,15 +278,14 @@ public class GameWorld
                 }
 
 
-                gameEntityArrayList.add(new GameEntity(x*TILE_DIMENSIONS, y*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS));
-                //System.out.println("Monster spawned at: " + x + " : " + y);
+                gameEntityArrayList.add( new GameEntity(new Vector2(x*TILE_DIMENSIONS, y*TILE_DIMENSIONS),
+                        new Vector2(TILE_DIMENSIONS, TILE_DIMENSIONS)) );
                 monsterDelay++;
                 monsterDelayCounter = 1;
             }
 
             else
             {
-                //System.out.println(monsterDelay+" : "+monsterDelayCounter);
                 monsterDelayCounter++;
             }
         }

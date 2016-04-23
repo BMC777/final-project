@@ -8,30 +8,31 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class AdjacentAgentSensor {
 
-    private Vector2 vOrigin;
-    private Circle sensor;
 
-    public AdjacentAgentSensor(float sensorRange, float xOrigin, float yOrigin) {
+    //private Vector2 center;
+    private Circle circle;
+
+    AdjacentAgentSensor(float sensorRange, Vector2 center) {
 
         // Instantiate Vector pointing to center of circle and Circle itself
-        vOrigin = new Vector2(xOrigin, yOrigin);
-        sensor = new Circle(vOrigin, sensorRange);
+        circle = new Circle(center, sensorRange);
+        //this.center = center;
     }
 
-    public void update(float xOrigin, float yOrigin) {
+    public void update(Vector2 newCenter) {
 
         // Update center of circle
-        vOrigin.set(xOrigin, yOrigin);
+        //center.set(newCenter);
 
         // Recenter circle
-        sensor.setPosition(vOrigin);
+        circle.setPosition(newCenter);
     }
 
-    public Vector2 getvOrigin() {
-        return vOrigin;
+    public Vector2 getCenter() {
+        return new Vector2(circle.x, circle.y);
     }
 
-    public Circle getSensor() {
-        return sensor;
+    public Circle getCircle() {
+        return circle;
     }
 }
