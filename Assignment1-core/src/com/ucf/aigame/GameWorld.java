@@ -54,7 +54,7 @@ public class GameWorld
         		// Inserting walls into the gameWorld
         		if ( dungeonMap[y][x] )
         		{
-            		wallObjectArrayList.add( new WallObject( new Rectangle( TILE_DIMENSIONS * x, TILE_DIMENSIONS * y, TILE_DIMENSIONS, TILE_DIMENSIONS ) ) );
+            		wallObjectArrayList.add( new WallObject( new BoundingBox( TILE_DIMENSIONS * x, TILE_DIMENSIONS * y, TILE_DIMENSIONS, TILE_DIMENSIONS ) ) );
         		}
 
                 if ( floorMap[y][x] && !summonedPlayer )
@@ -230,10 +230,10 @@ public class GameWorld
     {
         playerEntity.update(delta);
 
-        /*for (int i = 0; i < gameEntityArrayList.size(); i++)
+        for (int i = 0; i < gameEntityArrayList.size(); i++)
         {
             gameEntityArrayList.get(i).update(delta);
-        }*/
+        }
     }
 
     /*public void newWall(float x, float y)

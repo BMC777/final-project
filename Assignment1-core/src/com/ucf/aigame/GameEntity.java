@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class GameEntity
 {
-    private Rectangle collisionBox;
+	private static final int TILE_DIMENSIONS = 16;
+	
+    private BoundingBox boundingBox;
     private boolean detected;
 
     private Vector2 currentEntityHeading;   //Direction entity is facing (Should always be Normalized)
@@ -44,7 +46,7 @@ public class GameEntity
         currentEntityHeading = new Vector2(REFERENCE_VECTOR);       //Player always spawns facing 'East'
         nextEntityHeading = new Vector2(currentEntityHeading);
 
-        collisionBox = new Rectangle(xCurrentWorldPosition, yCurrentWorldPosition, entityWidth, entityHeight);
+        boundingBox = new BoundingBox(xCurrentWorldPosition, yCurrentWorldPosition, TILE_DIMENSIONS, TILE_DIMENSIONS);
 
         detected = false;
     }
@@ -54,7 +56,7 @@ public class GameEntity
         currentEntityHeading.set(nextEntityHeading);    //Update to new calculated heading
         rotationAngle = currentEntityHeading.angle();   //Angle new heading was rotated by.
 
-        collisionBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
+        boundingBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
     }
 
     public void rotateToFaceMouse(float xCurrentMousePosition, float yCurrentMousePosition)
@@ -117,9 +119,9 @@ public class GameEntity
         return yCurrentWorldPosition + yEntityOrigin;
     }
 
-    public Rectangle getCollisionBox()
+    public BoundingBox getBoundingBox()
     {
-        return collisionBox;
+        return boundingBox;
     }
 
     public void setDetection(boolean newValue) {
