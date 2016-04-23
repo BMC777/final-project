@@ -108,6 +108,7 @@ public class GameRenderer
 
         renderGameEntities();
         renderPlayerEntity();
+        renderAdjacentAgentSensors();
     }
 
     private void renderGameEntities()

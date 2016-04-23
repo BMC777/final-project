@@ -270,8 +270,7 @@ public class GameWorld
                 // If entity is 'near' the player, do not spawn
                 currentCoords.x -= playerEntity.getTiledPositionVector().x;
                 currentCoords.y -= playerEntity.getTiledPositionVector().y;
-                //System.out.print("dist: "+Math.abs( currentCoords.x + currentCoords.y )+" from ");
-                //System.out.println( currentCoords );
+
                 if ( Math.abs( currentCoords.x + currentCoords.y ) <= nearBoundary )
                 {
                     System.out.println("Too close at "+(int)Math.abs( currentCoords.x + currentCoords.y )+" spaces!");
@@ -287,7 +286,6 @@ public class GameWorld
 
             else
             {
-                //System.out.println(monsterDelay+" : "+monsterDelayCounter);
                 monsterDelayCounter++;
             }
         }
