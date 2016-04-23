@@ -7,40 +7,31 @@ import java.util.ArrayList;
  */
 public class CollisionDetector
 {
-    //private Intersector intersector;
-
     private PlayerEntity playerEntity;
-
     private ArrayList<WallObject> wallList;
     private ArrayList<GameEntity> entityList;
 
-    private Rectangle currentPlayerCollisionBox;
-    private Rectangle currentWallCollisionBox;
-    private Rectangle currentEntityCollisionBox;
-
-    private boolean[] collisionDetectionArray;
-
     CollisionDetector ( GameWorld gameWorld )
     {
-    	this.playerEntity = gameWorld.getPlayerEntity();
-    	this.wallList = gameWorld.getWallList();
-    	this.entityList = gameWorld.getEntityList();
+    	playerEntity = gameWorld.getPlayerEntity();
+    	wallList = gameWorld.getWallList();
+    	entityList = gameWorld.getEntityList();
     }
     
     public void update( GameWorld gameWorld )
     {
-    	this.entityList = gameWorld.getEntityList();
-    	this.playerEntity = gameWorld.getPlayerEntity();
+    	entityList = gameWorld.getEntityList();
+    	playerEntity = gameWorld.getPlayerEntity();
     	
     	GameEntity collidingEntity;
     	WallObject collidingWall;
     	
     	// Checking player entity for collisions
-    	/*collidingEntity = entityCollisionCheck( playerEntity.getBoundingBox() );
+    	collidingEntity = entityCollisionCheck( playerEntity.getBoundingBox() );
 		if ( collidingEntity != null )
 		{
 			System.out.println( "Player is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
-		}*/
+		}
 		
 		collidingWall = wallCollisionCheck( playerEntity.getBoundingBox() );
     	if ( collidingWall != null )
@@ -51,11 +42,11 @@ public class CollisionDetector
     	// Checking each entity for collisions
     	for ( int i = 0; i < entityList.size(); i++ )
     	{
-    		/*collidingEntity = entityCollisionCheck( entityList.get(i).getBoundingBox() );
+    		collidingEntity = entityCollisionCheck( entityList.get(i).getBoundingBox() );
     		if ( collidingEntity != null )
     		{
     			System.out.println( "Entity #" + i + " is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
-    		}*/
+    		}
     		
     		collidingWall = wallCollisionCheck( entityList.get(i).getBoundingBox() );
         	if ( collidingWall != null )
@@ -69,7 +60,7 @@ public class CollisionDetector
     {
     	for ( int i = 0; i < entityList.size(); i++ )
     	{
-    		if ( boundingBox.isBoundingBoxIntersecting( entityList.get(i).getBoundingBox() ) && boundingBox != entityList.get(i).getBoundingBox() );
+    		if ( boundingBox.isBoundingBoxIntersecting( entityList.get(i).getBoundingBox() ) && !boundingBox.equals( entityList.get( i ).getBoundingBox() ) )
     		{
     			return entityList.get( i );
     		}
