@@ -119,6 +119,11 @@ public class GameRenderer
         	shapeRenderer.rect( gameWorld.getEntityList().get(i).getPositionVector().x, gameWorld.getEntityList().get(i).getPositionVector().y, TILE_DIMENSIONS, TILE_DIMENSIONS );
         }
         
+        for ( int i = 0; i < gameWorld.getWallList().size(); i++ )
+        {
+        	shapeRenderer.rect( gameWorld.getWallList().get(i).getBoundingBox().getX(), gameWorld.getWallList().get(i).getBoundingBox().getY(), TILE_DIMENSIONS, TILE_DIMENSIONS );;
+        }
+        
         shapeRenderer.end();
 
         renderAdjacentAgentSensors();
@@ -136,7 +141,6 @@ public class GameRenderer
                     entity.getOriginVector().x, entity.getOriginVector().y,
                     entity.getDimensionVector().x, entity.getDimensionVector().y,
                     1, 1, entity.getRotationAngle());
-
         }
 
         batcher.end();
