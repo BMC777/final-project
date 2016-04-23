@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 /**
  * Created by Bryan on 1/21/2016.
@@ -108,6 +109,16 @@ public class GameRenderer
 
         renderGameEntities();
         renderPlayerEntity();
+        
+        shapeRenderer.begin( ShapeType.Line );
+        shapeRenderer.setColor(1, 1, 0, 1 );
+        
+        for ( int i = 0; i < gameWorld.getEntityList().size(); i++ )
+        {
+        	shapeRenderer.rect( gameWorld.getEntityList().get(i).getCurrentXPosition(), gameWorld.getEntityList().get(i).getCurrentYPosition(), TILE_DIMENSIONS, TILE_DIMENSIONS );
+        }
+        
+        shapeRenderer.end();
     }
 
     private void renderGameEntities()

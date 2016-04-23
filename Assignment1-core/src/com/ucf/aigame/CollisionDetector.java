@@ -36,18 +36,17 @@ public class CollisionDetector
     	WallObject collidingWall;
     	
     	// Checking player entity for collisions
-    	/*collidingEntity = entityCollisionCheck( playerEntity.getBoundingBox() );
+    	collidingEntity = entityCollisionCheck( playerEntity.getBoundingBox() );
 		if ( collidingEntity != null )
 		{
 			System.out.println( "Player is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
-		}*/
+		}
 		
 		collidingWall = wallCollisionCheck( playerEntity.getBoundingBox() );
     	if ( collidingWall != null )
     	{
     		System.out.println("Player is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
     	}
-    	
     	
     	// Checking each entity for collisions
     	for ( int i = 0; i < entityList.size(); i++ )
