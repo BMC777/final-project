@@ -1,7 +1,6 @@
 package com.ucf.aigame;
 
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -49,8 +48,13 @@ public class GameEntity
         currentEntityHeading = new Vector2(REFERENCE_VECTOR);       //Player always spawns facing 'East'
         nextEntityHeading = new Vector2(currentEntityHeading);
 
+<<<<<<< HEAD
+        boundingBox = new BoundingBox(this.position.x, this.position.y, TILE_DIMENSIONS, TILE_DIMENSIONS);
+
+=======
         // Collisions
         boundingBox = new BoundingBox( position.x, position.y, TILE_DIMENSIONS, TILE_DIMENSIONS );
+>>>>>>> 68c4edea7ef39a4139a72e452106b67b290ce94f
         detected = false;
 
         // Sensors
@@ -62,8 +66,22 @@ public class GameEntity
         currentEntityHeading.set(nextEntityHeading);    //Update to new calculated heading
         rotationAngle = currentEntityHeading.angle();   //Angle new heading was rotated by.
 
+<<<<<<< HEAD
+        boundingBox.setPosition(position.x, position.y);
+    }
+
+    public void rotateToFaceMouse(float xCurrentMousePosition, float yCurrentMousePosition)
+    {
+        //Determine the new heading vector offset by entityOrigin to align heading with center of sprite
+        nextEntityHeading.x = xCurrentMousePosition - (position.x + origin.x);
+        nextEntityHeading.y = yCurrentMousePosition - (position.y + origin.y);
+
+        //Normalize the heading vector
+        nextEntityHeading.nor();
+=======
 
         boundingBox.setPosition( position.x, position.y );
+>>>>>>> 68c4edea7ef39a4139a72e452106b67b290ce94f
     }
 
     public Vector2 getPositionVector()
