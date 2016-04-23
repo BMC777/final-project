@@ -6,14 +6,14 @@ package com.ucf.aigame;
 
 public class WallObject
 {
-	private Rectangle boundingBox;
+	private BoundingBox boundingBox;
 	
-	public WallObject( Rectangle boundingBox )
+	public WallObject( BoundingBox boundingBox )
 	{
 		this.boundingBox = boundingBox;
 	}
 	
-	public Rectangle getBoundingBox()
+	public BoundingBox getBoundingBox()
 	{
 		return boundingBox;
 	}

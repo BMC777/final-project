@@ -42,5 +42,18 @@ public class BoundingBox
 		this.x = x;
 		this.y = y;
 	}
+	
+	public boolean isBoundingBoxIntersecting( BoundingBox boundingBox )
+	{
+		if ( x < boundingBox.getX() + boundingBox.getWidth() &&
+			 x + width > boundingBox.getX() &&
+			 y < boundingBox.getY() + boundingBox.getHeight() &&
+			 y + height > boundingBox.getY() )
+		{
+			return true;
+		}
+		
+		return false;
+	}
 
 }

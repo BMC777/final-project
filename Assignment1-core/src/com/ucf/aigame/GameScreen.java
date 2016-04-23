@@ -32,7 +32,7 @@ public class GameScreen implements Screen
         dungeonGenerator = new DungeonGenerator( (int)( screenWidth / TILE_DIMENSIONS ), (int)( screenHeight / TILE_DIMENSIONS ) );
         
         gameWorld = new GameWorld( midPointX, midPointY, screenWidth, screenHeight, dungeonGenerator );
-        //collisionDetector = new CollisionDetector( gameWorld );
+        collisionDetector = new CollisionDetector( gameWorld );
         //debugger = new Debugger( gameWorld );
         gameRenderer = new GameRenderer( gameWorld, dungeonGenerator, debugger, screenWidth, screenHeight );
 
@@ -55,7 +55,7 @@ public class GameScreen implements Screen
     {
         runTime += delta;
         gameWorld.update(delta);
-        //collisionDetector.checkCollisions();
+        collisionDetector.update( gameWorld );
         gameRenderer.render(runTime);
         //debugger.update();
     }

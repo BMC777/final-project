@@ -9,7 +9,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class GameEntity
 {
-    private Rectangle collisionBox;
+	private static final int TILE_DIMENSIONS = 16;
+	
+    private BoundingBox boundingBox;
     private boolean detected;
 
     private AdjacentAgentSensor adjacentAgentSensor;
@@ -47,8 +49,13 @@ public class GameEntity
         currentEntityHeading = new Vector2(REFERENCE_VECTOR);       //Player always spawns facing 'East'
         nextEntityHeading = new Vector2(currentEntityHeading);
 
+<<<<<<< HEAD
         // Collisions
         collisionBox = new Rectangle(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y);
+=======
+        boundingBox = new BoundingBox(xCurrentWorldPosition, yCurrentWorldPosition, TILE_DIMENSIONS, TILE_DIMENSIONS);
+
+>>>>>>> 67bc590b6812265263f2f6c57a44ff9e4a905dd1
         detected = false;
 
         // Sensors
@@ -60,7 +67,21 @@ public class GameEntity
         currentEntityHeading.set(nextEntityHeading);    //Update to new calculated heading
         rotationAngle = currentEntityHeading.angle();   //Angle new heading was rotated by.
 
+<<<<<<< HEAD
         collisionBox.setPosition(position.x, position.y);
+=======
+        boundingBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
+    }
+
+    public void rotateToFaceMouse(float xCurrentMousePosition, float yCurrentMousePosition)
+    {
+        //Determine the new heading vector offset by entityOrigin to align heading with center of sprite
+        nextEntityHeading.x = xCurrentMousePosition - (xCurrentWorldPosition + xEntityOrigin);
+        nextEntityHeading.y = yCurrentMousePosition - (yCurrentWorldPosition + yEntityOrigin);
+
+        //Normalize the heading vector
+        nextEntityHeading.nor();
+>>>>>>> 67bc590b6812265263f2f6c57a44ff9e4a905dd1
     }
 
     public Vector2 getPositionVector()
@@ -103,9 +124,9 @@ public class GameEntity
         return position.y + origin.y;
     }
 
-    public Rectangle getCollisionBox()
+    public BoundingBox getBoundingBox()
     {
-        return collisionBox;
+        return boundingBox;
     }
 
     public void setDetection(boolean newValue) {
