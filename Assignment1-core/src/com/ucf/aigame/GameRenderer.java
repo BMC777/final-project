@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 /**
  * Created by Bryan on 1/21/2016.
@@ -108,6 +109,23 @@ public class GameRenderer
 
         renderGameEntities();
         renderPlayerEntity();
+
+        
+        shapeRenderer.begin( ShapeType.Line );
+        shapeRenderer.setColor(1, 1, 0, 1 );
+        
+        for ( int i = 0; i < gameWorld.getEntityList().size(); i++ )
+        {
+        	shapeRenderer.rect( gameWorld.getEntityList().get(i).getPositionVector().x, gameWorld.getEntityList().get(i).getPositionVector().y, TILE_DIMENSIONS, TILE_DIMENSIONS );
+        }
+        
+        for ( int i = 0; i < gameWorld.getWallList().size(); i++ )
+        {
+        	shapeRenderer.rect( gameWorld.getWallList().get(i).getBoundingBox().getX(), gameWorld.getWallList().get(i).getBoundingBox().getY(), TILE_DIMENSIONS, TILE_DIMENSIONS );;
+        }
+        
+        shapeRenderer.end();
+
         renderAdjacentAgentSensors();
     }
 
@@ -123,7 +141,6 @@ public class GameRenderer
                     entity.getOriginVector().x, entity.getOriginVector().y,
                     entity.getDimensionVector().x, entity.getDimensionVector().y,
                     1, 1, entity.getRotationAngle());
-
         }
 
         batcher.end();

@@ -48,7 +48,6 @@ public class CollisionDetector
     		System.out.println("Player is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
     	}
     	
-    	
     	// Checking each entity for collisions
     	for ( int i = 0; i < entityList.size(); i++ )
     	{
