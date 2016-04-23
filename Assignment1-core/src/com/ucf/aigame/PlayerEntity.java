@@ -120,17 +120,22 @@ public class PlayerEntity
                 currentPlayerVelocity.x = 0;
         }*/
 
-        //Update World position, scaling velocity over timeSinceLastUpdate
+        // Update World position, scaling velocity over timeSinceLastUpdate
         xCurrentWorldPosition += currentPlayerVelocity.x * timeSinceLastUpdate;
         yCurrentWorldPosition += currentPlayerVelocity.y * timeSinceLastUpdate;
 
         boundingBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
-        wallSensor.update(currentPlayerHeading);
+        // wallSensor.update(currentPlayerHeading);
 
+<<<<<<< HEAD
         //radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
         //pieSliceSensor.update(currentPlayerHeading);
+=======
+        // radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
+        // pieSliceSensor.update(currentPlayerHeading);
+>>>>>>> 3b065ee878e3a1819bda20c822d7d21a75e6edce
 
-        //currentlyHaveCollision = false;
+        // currentlyHaveCollision = false;
     }
 
     //Updated by InputHandler

@@ -1,6 +1,6 @@
 package com.ucf.aigame;
 
-import java.io.*;
+// import java.io.*;
 import java.util.LinkedList;
 
 public class DungeonGenerator
@@ -17,12 +17,12 @@ public class DungeonGenerator
 
     private static DungeonCell rootCell;    //Root of the BSP
 
-    public DungeonGenerator( int dungeonWidth, int dungeonHeight ) throws IOException
+    public DungeonGenerator( int dungeonWidth, int dungeonHeight ) //throws IOException
     {
     	this.dungeonWidth = dungeonWidth;
     	this.dungeonHeight = dungeonHeight;
     	
-        PrintWriter fileOut = new PrintWriter( "DungeonMap.txt" );  // Creates a DungeonMap.txt output file within the Assignment's folder
+        //PrintWriter fileOut = new PrintWriter( "DungeonMap.txt" );  // Creates a DungeonMap.txt output file within the Assignment's folder
 
         // Initialize private variables
         dungeonMap = new boolean[ dungeonHeight ][ dungeonWidth ];
@@ -85,7 +85,7 @@ public class DungeonGenerator
         inOrderTraversal( rootCell );   // Traverse the tree in-order and fill inOrderCellList
 
         // Prints BSP cell co-ordinate values In-Order ( These are not the room co-ordinates )
-        fileOut.print("In-Order Tree Traversal: ");
+        /*fileOut.print("In-Order Tree Traversal: ");
         for ( int i = 0; i < inOrderCellList.size(); i++ )
         {
             fileOut.print("(" + inOrderCellList.get( i ).getX() + "," + inOrderCellList.get( i ).getY() + "), ");
@@ -96,7 +96,7 @@ public class DungeonGenerator
             }
         }
         fileOut.println();
-        fileOut.println();
+        fileOut.println();*/
 
         // Create a door leading into whatever wall the drawn paths end at.
         for ( int i = 0; i < doorList.size(); i++ )
@@ -105,7 +105,7 @@ public class DungeonGenerator
         }
 
         // Print the dungeonMap to file output.
-        for ( int y = dungeonHeight - 1; y >= 0; y-- )
+        /*for ( int y = dungeonHeight - 1; y >= 0; y-- )
         {
             for ( int x = 0; x < dungeonWidth; x++ )
             {
@@ -120,9 +120,9 @@ public class DungeonGenerator
             }
 
             fileOut.println( );
-        }
+        } */
 
-        fileOut.close();
+        // fileOut.close();
     }
 
 

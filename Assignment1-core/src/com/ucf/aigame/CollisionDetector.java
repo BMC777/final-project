@@ -32,7 +32,7 @@ public class CollisionDetector
 
     private boolean[] collisionDetectionArray;
 
-    CollisionDetector (GameWorld gameWorld)
+    CollisionDetector ( GameWorld gameWorld, DungeonGenerator dungeonGenerator )
     {
         /*// Get all GameWorld Objects
         this.playerEntity = gameWorld.getPlayerEntity();

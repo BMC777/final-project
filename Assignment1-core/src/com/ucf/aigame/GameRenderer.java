@@ -108,7 +108,6 @@ public class GameRenderer
 
         renderGameEntities();
         renderPlayerEntity();
-        renderAdjacentAgentSensors();
     }
 
     private void renderGameEntities()
@@ -139,48 +138,6 @@ public class GameRenderer
                 1, 1, playerEntity.getRotationAngle());
 
         batcher.end();
-    }
-
-    private void renderAdjacentAgentSensors()
-    {
-        // For AdjacentAgentSensor
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-
-        // ------------------------------------------------------------------
-        /*/ Draw AdjacentAgentSensor Circle
-        shapeRenderer.circle(playerEntity.getAdjecentAgentSensor().x, playerEntity.getAdjecentAgentSensor().y,
-                playerEntity.getAdjecentAgentSensor().radius);
-
-        // Check all GameEntities
-        for (int i = 0; i < gameWorld.getEntityList().size(); i++) {
-
-            // Check if detected by AdjacentAgentSensor
-            if ( gameWorld.getEntityList().get(i).isDetected() ) {
-                shapeRenderer.setColor(255, 0, 0, 0.5f);
-
-                // Draw Circle
-                shapeRenderer.circle(gameWorld.getEntityList().get(i).getEntityCenter().x,
-                        gameWorld.getEntityList().get(i).getEntityCenter().y,
-                        gameWorld.getEntityList().get(i).getWidth());
-
-                // Draw Relative Heading
-                shapeRenderer.rectLine(playerEntity.getvOrigin(), gameWorld.getEntityList().get(i).getEntityCenter(), 1);
-            }
-        } // */
-        // -------------------------------------------------------------------
-
-        for (int i = 0; i < gameWorld.getEntityList().size(); i++)
-        {
-            GameEntity entity = gameWorld.getEntityList().get(i);
-
-            shapeRenderer.circle(entity.getAdjacentAgentSensor().x, entity.getAdjacentAgentSensor().y,
-                    entity.getAdjacentAgentSensor().radius);
-
-            // Add detection here AND in collisions to trigger Pursuit()
-
-        }
-
-        shapeRenderer.end();
     }
 
         /*renderBackground();

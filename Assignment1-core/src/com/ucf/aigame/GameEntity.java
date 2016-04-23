@@ -1,6 +1,5 @@
 package com.ucf.aigame;
 
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -12,45 +11,42 @@ public class GameEntity
     private Rectangle collisionBox;
     private boolean detected;
 
-    private AdjacentAgentSensor adjacentAgentSensor;
-
     private Vector2 currentEntityHeading;   //Direction entity is facing (Should always be Normalized)
     private Vector2 nextEntityHeading;
 
     private int inputX;
     private int inputY;
 
-    private Vector2 dimensions;
-    private Vector2 origin;
-    private Vector2 position;
-    private Vector2 centerOfEntity;
+    private float entityWidth;
+    private float entityHeight;
+    private float xEntityOrigin;
+    private float yEntityOrigin;
+    private float xCurrentWorldPosition;
+    private float yCurrentWorldPosition;
     private float rotationAngle; //Angle between current and next Heading
 
     private static final Vector2 REFERENCE_VECTOR = new Vector2(1, 0);  //Normalized Vector pointing to 0 degrees
 
-    GameEntity(Vector2 position, Vector2 dimensions)
+    GameEntity(float xCurrentWorldPosition, float yCurrentWorldPosition, float entityWidth, float entityHeight)
     {
         //Player Sprite dimensions
-        this.dimensions = dimensions;
+        this.entityWidth = entityWidth;
+        this.entityHeight = entityHeight;
 
         //Center of the Sprite
-        this.origin = new Vector2(position.x/2, position.y/2);
+        this.xEntityOrigin = entityWidth / 2;
+        this.yEntityOrigin = entityHeight / 2;
 
         //Spawn Position
-        this.position = position;
+        this.xCurrentWorldPosition = xCurrentWorldPosition;
+        this.yCurrentWorldPosition = yCurrentWorldPosition;
 
-        this.centerOfEntity = new Vector2(position.x+dimensions.x/2, position.y+dimensions.y/2);
-
-        // Headings
         currentEntityHeading = new Vector2(REFERENCE_VECTOR);       //Player always spawns facing 'East'
         nextEntityHeading = new Vector2(currentEntityHeading);
 
-        // Collisions
-        collisionBox = new Rectangle(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y);
-        detected = false;
+        collisionBox = new Rectangle(xCurrentWorldPosition, yCurrentWorldPosition, entityWidth, entityHeight);
 
-        // Sensors
-        adjacentAgentSensor = new AdjacentAgentSensor(dimensions.x*2, centerOfEntity);
+        detected = false;
     }
 
     public void update(float timeSinceLastUpdate)
@@ -58,12 +54,27 @@ public class GameEntity
         currentEntityHeading.set(nextEntityHeading);    //Update to new calculated heading
         rotationAngle = currentEntityHeading.angle();   //Angle new heading was rotated by.
 
-        collisionBox.setPosition(position.x, position.y);
+        collisionBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
     }
 
-    public Vector2 getPositionVector()
+    public void rotateToFaceMouse(float xCurrentMousePosition, float yCurrentMousePosition)
     {
-        return this.position;
+        //Determine the new heading vector offset by entityOrigin to align heading with center of sprite
+        nextEntityHeading.x = xCurrentMousePosition - (xCurrentWorldPosition + xEntityOrigin);
+        nextEntityHeading.y = yCurrentMousePosition - (yCurrentWorldPosition + yEntityOrigin);
+
+        //Normalize the heading vector
+        nextEntityHeading.nor();
+    }
+
+    public float getCurrentXPosition()
+    {
+        return xCurrentWorldPosition;
+    }
+
+    public float getCurrentYPosition()
+    {
+        return yCurrentWorldPosition;
     }
 
     public float getRotationAngle()
@@ -71,24 +82,29 @@ public class GameEntity
         return rotationAngle;
     }
 
-    public Vector2 getDimensionVector()
+    public float getWidth()
     {
-        return dimensions;
+        return entityWidth;
     }
 
-    public Vector2 getOriginVector()
+    public float getHeight()
     {
-        return origin;
+        return entityHeight;
+    }
+
+    public float getXEntityOrigin()
+    {
+        return xEntityOrigin;
+    }
+
+    public float getYEntityOrigin()
+    {
+        return yEntityOrigin;
     }
 
     public Vector2 getEntityCenter()
     {
-        return new Vector2(position.x + origin.x, position.y + origin.y);
-    }
-
-    public Circle getAdjacentAgentSensor()
-    {
-        return adjacentAgentSensor.getCircle();
+        return new Vector2(xCurrentWorldPosition + xEntityOrigin, yCurrentWorldPosition + yEntityOrigin);
     }
 
     public Vector2 getEntityHeading()
@@ -98,7 +114,7 @@ public class GameEntity
 
     public float getWallSensorOriginY()
     {
-        return position.y + origin.y;
+        return yCurrentWorldPosition + yEntityOrigin;
     }
 
     public Rectangle getCollisionBox()
