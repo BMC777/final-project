@@ -131,7 +131,7 @@ public class AStarSearch {
 
         // Determine when is "close enough" when facing / seeking target
         float rotationError = rotationSpeed;
-        float spacialError = playerEntity.getWidth()*0.1f;
+        float spacialError = 16*0.1f; //playerEntity.getWidth()*0.1f;
 
         // Rotate in direction closest to target
         if ( angle < 0 ){
@@ -184,7 +184,7 @@ public class AStarSearch {
     private void createAdjacencyList(ArrayList<GraphNode> list) {
 
         GraphNode match;
-        float unitLength = playerEntity.getWidth();
+        float unitLength = 16; //playerEntity.getWidth();
         float addX, addY;
 
         // For each GraphNode, check adjacent tiles for existing neighbors
@@ -236,7 +236,7 @@ public class AStarSearch {
 
     private Vector2 findClosestPathNode() {
 
-        Vector2 currentPosition = playerEntity.getvOrigin();
+        Vector2 currentPosition = playerEntity.getCenter();
         Vector2 closestNode = new Vector2();
         float minDistance = 1000000;
         float curDistance, x, y;

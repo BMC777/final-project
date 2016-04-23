@@ -119,17 +119,11 @@ public class GameRenderer
         {
             GameEntity entity = gameWorld.getEntityList().get(i);
 
-<<<<<<< HEAD
             batcher.draw(gameEntityTextureRegion, entity.getPositionVector().x, entity.getPositionVector().y,
                     entity.getOriginVector().x, entity.getOriginVector().y,
                     entity.getDimensionVector().x, entity.getDimensionVector().y,
                     1, 1, entity.getRotationAngle());
-=======
-            batcher.draw(gameEntityTextureRegion, gameWorld.getEntityList().get(i).getCurrentXPosition(),
-                    gameWorld.getEntityList().get(i).getCurrentYPosition(),
-                    gameWorld.getEntityList().get(i).getXEntityOrigin(), gameWorld.getEntityList().get(i).getYEntityOrigin(),
-                    TILE_DIMENSIONS, TILE_DIMENSIONS, 1, 1, gameWorld.getEntityList().get(i).getRotationAngle());
->>>>>>> a9ed03588fad9b6d2d32aeb69f9ed1c423ea1f6d
+
         }
 
         batcher.end();
