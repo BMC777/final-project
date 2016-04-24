@@ -30,13 +30,13 @@ public class CollisionDetector
     	collidingEntity = entityCollisionCheck( playerEntity.getBoundingBox() );
 		if ( collidingEntity != null )
 		{
-			System.out.println( "Player is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
+			//System.out.println( "Player is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
 		}
 		
 		collidingWall = wallCollisionCheck( playerEntity.getBoundingBox() );
     	if ( collidingWall != null )
     	{
-    		System.out.println("Player is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
+    		//System.out.println("Player is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
     	}
     	
     	// Checking each entity for collisions
@@ -45,13 +45,13 @@ public class CollisionDetector
     		collidingEntity = entityCollisionCheck( entityList.get(i).getBoundingBox() );
     		if ( collidingEntity != null )
     		{
-    			System.out.println( "Entity #" + i + " is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
+    			//System.out.println( "Entity #" + i + " is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
     		}
     		
     		collidingWall = wallCollisionCheck( entityList.get(i).getBoundingBox() );
         	if ( collidingWall != null )
         	{
-    			System.out.println( "Entity #" + i + " is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
+    			//System.out.println( "Entity #" + i + " is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
         	}
     	}
     }

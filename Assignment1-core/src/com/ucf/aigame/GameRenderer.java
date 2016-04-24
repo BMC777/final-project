@@ -124,7 +124,7 @@ public class GameRenderer
         {
         	shapeRenderer.rect( gameWorld.getWallList().get(i).getBoundingBox().getX(), gameWorld.getWallList().get(i).getBoundingBox().getY(), TILE_DIMENSIONS, TILE_DIMENSIONS );;
         }
-        
+
         shapeRenderer.end();
 
         renderAdjacentAgentSensors();

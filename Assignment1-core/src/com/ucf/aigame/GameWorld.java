@@ -22,7 +22,7 @@ public class GameWorld
     private static final int TILE_DIMENSIONS = 16;
     public Vector2 goalLocation;
 
-    private int monsterDelay = 6;
+    private int monsterDelay = 100;
     private int monsterDelayCounter = 0;
 
     public GameWorld( float midPointX, float midPointY, float gameWidth, float gameHeight, DungeonGenerator dungeonGenerator )
@@ -119,7 +119,7 @@ public class GameWorld
 
 
                 gameEntityArrayList.add( new GameEntity(new Vector2(x*TILE_DIMENSIONS, y*TILE_DIMENSIONS),
-                        new Vector2(TILE_DIMENSIONS, TILE_DIMENSIONS)) );
+                        new Vector2(TILE_DIMENSIONS, TILE_DIMENSIONS), this) );
                 monsterDelay++;
                 monsterDelayCounter = 1;
             }

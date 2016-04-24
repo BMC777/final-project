@@ -39,7 +39,7 @@ public class GameScreen implements Screen
         PlayerEntity playerEntity = gameWorld.getPlayerEntity();
 
         // For player input
-        InputHandler inputHandler = new InputHandler( playerEntity );
+        InputHandler inputHandler = new InputHandler( playerEntity, gameWorld );
         Gdx.input.setInputProcessor( inputHandler );
 
     }

@@ -1,6 +1,5 @@
 package com.ucf.aigame;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
@@ -10,11 +9,19 @@ import com.badlogic.gdx.InputProcessor;
 public class InputHandler implements InputProcessor
 {
     private PlayerEntity playerEntity;
+    private GameEntity gameEntity;
+    private GameWorld gameWorld;
 
     public InputHandler( PlayerEntity playerEntity )
     {
         this.playerEntity = playerEntity;
         //playerEntity.setController(this);
+    }
+
+    public InputHandler( PlayerEntity playerEntity, GameWorld gameWorld )
+    {
+        this.playerEntity = playerEntity;
+        this.gameWorld = gameWorld;
     }
 
     @Override
@@ -36,6 +43,13 @@ public class InputHandler implements InputProcessor
 
             case Keys.D:
                 playerEntity.moveRight();
+                return true;
+
+            case Keys.T:
+                for (int i=0; i<gameWorld.getEntityList().size(); i++)
+                {
+                    gameWorld.getEntityList().get(i).test();
+                }
                 return true;
         }
 
