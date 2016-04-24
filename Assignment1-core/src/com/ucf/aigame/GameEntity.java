@@ -11,7 +11,7 @@ public class GameEntity
 	private static final int TILE_DIMENSIONS = 16;
 	
     private BoundingBox boundingBox;
-    private boolean detected;
+    private boolean alerted;
 
     private AdjacentAgentSensor adjacentAgentSensor;
     private Movement movement;
@@ -32,10 +32,8 @@ public class GameEntity
     private float rotationAngle; //Angle between current and next Heading
 
     private static final Vector2 REFERENCE_VECTOR = new Vector2(1, 0);  //Normalized Vector pointing to 0 degrees
-    private static final float BASE_VELOCITY = 40;
-    private static final float MAX_SPEED = 80;
-
-    private boolean debug;
+    private static final float BASE_VELOCITY = 20;
+    private static final float MAX_SPEED = 60;
 
     GameEntity(Vector2 position, Vector2 dimensions, GameWorld gameWorld)
     {
@@ -58,15 +56,13 @@ public class GameEntity
 
         // Collisions
         boundingBox = new BoundingBox( position.x, position.y, TILE_DIMENSIONS, TILE_DIMENSIONS );
-        detected = false;
+        alerted = false;
 
         // Sensors
         adjacentAgentSensor = new AdjacentAgentSensor(dimensions.x*2, centerOfEntity, gameWorld);
 
         //this.gameWorld = gameWorld;
         this.movement = new Movement(this, gameWorld);
-
-        this.debug = true;
     }
 
     public void test()
@@ -97,7 +93,13 @@ public class GameEntity
         centerOfEntity.set(position.x+dimensions.x/2, position.y+dimensions.y/2);
 
         adjacentAgentSensor.update(centerOfEntity);
-        movement.wander();
+
+        if ( isAlerted() ) {
+            movement.pursuit();
+        }
+        else {
+            movement.wander();
+        }
 
         boundingBox.setPosition(position.x, position.y);
     }
@@ -164,12 +166,12 @@ public class GameEntity
         return boundingBox;
     }
 
-    public void setDetection(boolean newValue) {
-        detected = newValue;
+    public void setAlertion(boolean newValue) {
+        alerted = newValue;
     }
 
-    public boolean isDetected() {
-        return detected;
+    public boolean isAlerted() {
+        return alerted;
     }
 
     // Used by Movement Class

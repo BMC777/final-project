@@ -53,6 +53,11 @@ public class CollisionDetector
         	{
     			//System.out.println( "Entity #" + i + " is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
         	}
+
+			if ( entityList.get(i).getAdjacentAgentSensor().contains( playerEntity.getCenter() ) )
+			{
+				entityList.get(i).setAlertion(true);
+			}
     	}
     }
     
@@ -68,6 +73,19 @@ public class CollisionDetector
     	
     	return null;
     }
+
+	private GameEntity entitySensoryCheck( BoundingBox boundingBox )
+	{
+		for ( int i = 0; i < entityList.size(); i++ )
+		{
+			if ( entityList.get(i).getAdjacentAgentSensor().contains( playerEntity.getCenter() ) )
+			{
+				return entityList.get( i );
+			}
+		}
+
+		return null;
+	}
     
     private WallObject wallCollisionCheck( BoundingBox boundingBox )
     {

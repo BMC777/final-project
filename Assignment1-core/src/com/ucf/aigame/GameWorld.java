@@ -22,7 +22,7 @@ public class GameWorld
     private static final int TILE_DIMENSIONS = 16;
     public Vector2 goalLocation;
 
-    private int monsterDelay = 100;
+    private int monsterDelay = 40;
     private int monsterDelayCounter = 0;
 
     public GameWorld( float midPointX, float midPointY, float gameWidth, float gameHeight, DungeonGenerator dungeonGenerator )

@@ -163,8 +163,8 @@ public class GameRenderer
     {
         // For AdjacentAgentSensor
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(1, 1, 0, 1 );
 
-        // For sake of committing
 
         // ------------------------------------------------------------------
         /*/ Draw AdjacentAgentSensor Circle
@@ -175,7 +175,7 @@ public class GameRenderer
         for (int i = 0; i < gameWorld.getEntityList().size(); i++) {
 
             // Check if detected by AdjacentAgentSensor
-            if ( gameWorld.getEntityList().get(i).isDetected() ) {
+            if ( gameWorld.getEntityList().get(i).isAlerted() ) {
                 shapeRenderer.setColor(255, 0, 0, 0.5f);
 
                 // Draw Circle
@@ -193,11 +193,16 @@ public class GameRenderer
         {
             GameEntity entity = gameWorld.getEntityList().get(i);
 
+            if ( entity.isAlerted() ) {
+                shapeRenderer.setColor(Color.RED);
+            }
+
             shapeRenderer.circle(entity.getAdjacentAgentSensor().x, entity.getAdjacentAgentSensor().y,
                     entity.getAdjacentAgentSensor().radius);
 
-            // Add detection here AND in collisions to trigger Pursuit()
-
+            if ( entity.isAlerted() ) {
+                shapeRenderer.setColor(1, 1, 0, 1 );
+            }
         }
 
         shapeRenderer.end();
@@ -449,7 +454,7 @@ public class GameRenderer
         for (int i = 0; i < gameWorld.getEntityList().size(); i++) {
 
             // Check if detected by AdjacentAgentSensor
-            if ( gameWorld.getEntityList().get(i).isDetected() ) {
+            if ( gameWorld.getEntityList().get(i).isAlerted() ) {
                 shapeRenderer.setColor(255, 0, 0, 0.5f);
 
                 // Draw Circle
@@ -470,7 +475,7 @@ public class GameRenderer
         for (int i = 0; i < gameWorld.getEntityList().size(); i++) {
 
             // Check if detected by AdjacentAgentSensor
-            if ( gameWorld.getEntityList().get(i).isDetected() ) {
+            if ( gameWorld.getEntityList().get(i).isAlerted() ) {
                 shapeRenderer.setColor(255, 0, 0, 0.5f);
 
                 // For: PieSliceSensor (detected)
