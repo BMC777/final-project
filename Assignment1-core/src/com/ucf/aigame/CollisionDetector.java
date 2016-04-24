@@ -85,7 +85,7 @@ public class CollisionDetector
 		}
 		
     	playerEntity.setCollisionDetection( collisionUp, collisionDown, collisionLeft, collisionRight );
-		
+    	
     	// Checking each entity for collisions
     	for ( int i = 0; i < entityList.size(); i++ )
     	{
