@@ -48,6 +48,9 @@ public class GameRenderer
     // Dirt Floors
     private static TextureRegion dirtFloor3;
 
+    // Treasure
+    private static Texture treasureJewel;
+
     private float gameWidth;
     private float gameHeight;
 
@@ -108,9 +111,11 @@ public class GameRenderer
         
         batcher.end();
 
+        renderTreasure();
+        //renderGraphNodes();
+        renderAdjacentAgentSensors();
         renderGameEntities();
         renderPlayerEntity();
-        renderGraphNodes();
         
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(1, 1, 0, 1 );
@@ -125,13 +130,16 @@ public class GameRenderer
         	shapeRenderer.rect( gameWorld.getWallList().get(i).getBoundingBox().getX(), gameWorld.getWallList().get(i).getBoundingBox().getY(), TILE_DIMENSIONS, TILE_DIMENSIONS );;
         }
 
+        for (int i = 0; i < gameWorld.getTreasureArrayList().size(); i++)
+        {
+            shapeRenderer.rect( gameWorld.getTreasureArrayList().get(i).getPosition().x, gameWorld.getTreasureArrayList().get(i).getPosition().y, TILE_DIMENSIONS, TILE_DIMENSIONS);
+        }
+
         shapeRenderer.end();
 
-        renderAdjacentAgentSensors();
     }
 
-    private void renderGameEntities()
-    {
+    private void renderGameEntities() {
         batcher.begin();
 
         for (int i = 0; i < gameWorld.getEntityList().size(); i++)
@@ -147,8 +155,7 @@ public class GameRenderer
         batcher.end();
     }
 
-    private void renderPlayerEntity()
-    {
+    private void renderPlayerEntity() {
         batcher.begin();
 
         //Drawing the playerEntityTexture
@@ -159,8 +166,7 @@ public class GameRenderer
         batcher.end();
     }
 
-    private void renderAdjacentAgentSensors()
-    {
+    private void renderAdjacentAgentSensors() {
         // For AdjacentAgentSensor
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1, 1, 0, 1 );
@@ -208,8 +214,7 @@ public class GameRenderer
         shapeRenderer.end();
     }
 
-    private void renderGraphNodes()
-    {
+    private void renderGraphNodes() {
 
         /*
         Color nodeColor = Color.CYAN;
@@ -265,6 +270,21 @@ public class GameRenderer
 
         shapeRenderer.end();
 
+    }
+
+    private void renderTreasure() {
+        batcher.begin();
+
+        // Go through uncollected Treasure
+        for (int i=0; i<gameWorld.getTreasureArrayList().size(); i++) {
+            Treasure treasure = gameWorld.getTreasureArrayList().get(i);
+
+            // Draw Treasure
+            batcher.draw(treasureJewel, treasure.getPosition().x, treasure.getPosition().y,
+                    treasure.getDimensions().x, treasure.getDimensions().y);
+        }
+
+        batcher.end();
     }
 
         /*renderBackground();
@@ -638,5 +658,7 @@ public class GameRenderer
         
         topMiddleCaveWall = AssetLoader.topMiddleCaveWall;
         dirtFloor3 = AssetLoader.dirtFloor3;
+
+        treasureJewel = AssetLoader.treasureJewel;
     }
 }

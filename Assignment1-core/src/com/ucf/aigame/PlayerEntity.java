@@ -11,6 +11,7 @@ public class PlayerEntity
 	
     // Sensors and collisions
     private BoundingBox boundingBox;
+    private Backpack backpack;
     private WallSensor wallSensor;
     private AdjacentAgentSensor radar;
     private PieSliceSensor pieSliceSensor;
@@ -80,6 +81,7 @@ public class PlayerEntity
         //wallSensor = new WallSensor(playerWidth * 6);
         boundingBox = new BoundingBox(xCurrentWorldPosition, yCurrentWorldPosition, PLAYER_DIMENSIONS, PLAYER_DIMENSIONS);
 
+        backpack = new Backpack();
         //radar = new AdjacentAgentSensor(playerWidth * 6, xCurrentWorldPosition+xPlayerOrigin, yCurrentWorldPosition+yPlayerOrigin);
         //pieSliceSensor = new PieSliceSensor(currentPlayerHeading, playerWidth * 6);
 
@@ -284,6 +286,10 @@ public class PlayerEntity
         return boundingBox;
     }
 
+    public Backpack getBackpack() {
+        return backpack;
+    }
+
     public void setCollisionDetection(boolean collisionUp, boolean collisionDown, boolean collisionLeft, boolean collisionRight)
     {
         this.collisionUp = collisionUp;
@@ -305,7 +311,7 @@ public class PlayerEntity
 
     public Vector2 getCenter()
     {
-        return new Vector2(xCurrentWorldPosition+PLAYER_DIMENSIONS, yCurrentWorldPosition+PLAYER_DIMENSIONS);
+        return new Vector2(xCurrentWorldPosition+PLAYER_DIMENSIONS/2, yCurrentWorldPosition+PLAYER_DIMENSIONS/2);
     }
 
     public Vector2 getCurrentHeading() {

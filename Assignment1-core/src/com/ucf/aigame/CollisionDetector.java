@@ -10,21 +10,25 @@ public class CollisionDetector
     private PlayerEntity playerEntity;
     private ArrayList<WallObject> wallList;
     private ArrayList<GameEntity> entityList;
+	private ArrayList<Treasure> treasureList;
 
     CollisionDetector ( GameWorld gameWorld )
     {
     	playerEntity = gameWorld.getPlayerEntity();
     	wallList = gameWorld.getWallList();
     	entityList = gameWorld.getEntityList();
+		treasureList = gameWorld.getTreasureArrayList();
     }
     
     public void update( GameWorld gameWorld )
     {
     	entityList = gameWorld.getEntityList();
     	playerEntity = gameWorld.getPlayerEntity();
+		treasureList = gameWorld.getTreasureArrayList();
     	
     	GameEntity collidingEntity;
     	WallObject collidingWall;
+		Treasure collidingTreasure;
     	
     	// Checking player entity for collisions
     	collidingEntity = entityCollisionCheck( playerEntity.getBoundingBox() );
@@ -38,6 +42,15 @@ public class CollisionDetector
     	{
     		//System.out.println("Player is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
     	}
+
+		collidingTreasure = treasureCollisionCheck(playerEntity.getBoundingBox());
+		if ( collidingTreasure != null )
+		{
+			//System.out.println("Player is colliding with Treasure #" + treasureList.indexOf( collidingTreasure ) + " in list!");
+			System.out.println("Treasure Collected!");
+			playerEntity.getBackpack().add( collidingTreasure );
+			treasureList.remove(collidingTreasure);
+		}
     	
     	// Checking each entity for collisions
     	for ( int i = 0; i < entityList.size(); i++ )
@@ -74,13 +87,13 @@ public class CollisionDetector
     	return null;
     }
 
-	private GameEntity entitySensoryCheck( BoundingBox boundingBox )
+	private Treasure treasureCollisionCheck( BoundingBox boundingBox )
 	{
-		for ( int i = 0; i < entityList.size(); i++ )
+		for ( int i = 0; i < treasureList.size(); i++ )
 		{
-			if ( entityList.get(i).getAdjacentAgentSensor().contains( playerEntity.getCenter() ) )
+			if ( boundingBox.isBoundingBoxIntersecting( treasureList.get(i).getBoundingBox() ) )
 			{
-				return entityList.get( i );
+				return treasureList.get( i );
 			}
 		}
 

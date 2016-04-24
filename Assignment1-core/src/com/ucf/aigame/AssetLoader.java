@@ -35,6 +35,9 @@ public class AssetLoader
     
     // Dirt Floors
     public static TextureRegion dirtFloor3;
+
+    // Treasure
+    public static Texture treasureJewel;
     
     public static void load()
     {
@@ -44,6 +47,7 @@ public class AssetLoader
         gameEntityTexture = new Texture(Gdx.files.internal("game_entity"));
         playerEntityTexture = new Texture(Gdx.files.internal("player"));
         spriteSheet = new Texture( Gdx.files.internal( "sprite_sheet"));
+        treasureJewel = new Texture(Gdx.files.internal("jewel.png"));
 
         // Initialize TextureRegions
         playerEntityTextureRegion = new TextureRegion(playerEntityTexture);
