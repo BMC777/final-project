@@ -25,7 +25,7 @@ public class Debugger
         wallToolStatus = false;
         entityToolStatus = false;
 
-        wallSensorLengthArray = new float[playerEntity.getWallSensorLengthArray().length];
+        //wallSensorLengthArray = new float[playerEntity.getWallSensorLengthArray().length];
         for (int i = 0; i < wallSensorLengthArray.length; i++)
         {
             wallSensorLengthArray[i] = 0;

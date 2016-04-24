@@ -45,6 +45,11 @@ public class InputHandler implements InputProcessor
                 playerEntity.moveRight();
                 return true;
 
+            case Keys.X:
+                gameWorld.dropTreasure();
+
+                return true;
+
             case Keys.T:
                 for (int i=0; i<gameWorld.getEntityList().size(); i++)
                 {
