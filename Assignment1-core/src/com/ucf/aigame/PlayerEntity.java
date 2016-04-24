@@ -25,7 +25,6 @@ public class PlayerEntity
     boolean collisionDown;
     boolean collisionLeft;
     boolean collisionRight;
-    boolean currentlyHaveCollision;
 
     private int inputX;
     private int inputY;
@@ -47,7 +46,7 @@ public class PlayerEntity
     private static final float BASE_VELOCITY = 125;
     private static final Vector2 REFERENCE_VECTOR = new Vector2(1, 0);  //Normalized Vector pointing to 0 degrees
 
-    private static final float MAX_SPEED = 250;
+    //private static final float MAX_SPEED = 250;
 
     //private AStarSearch aStarSearch;
 
@@ -74,6 +73,7 @@ public class PlayerEntity
 
         currentPlayerHeading = new Vector2( REFERENCE_VECTOR );		//Player always spawns facing 'East'
         nextPlayerHeading = new Vector2( currentPlayerHeading );
+         
         currentPlayerVelocity = new Vector2();						//Velocity is initially 0
         nextPlayerVelocity = new Vector2( currentPlayerVelocity );
 
@@ -88,8 +88,6 @@ public class PlayerEntity
 
     public void update( float timeSinceLastUpdate )
     {
-        //aStarSearch.update();
-
         currentPlayerHeading.set(nextPlayerHeading);    // Update to new calculated heading
         rotationAngle = currentPlayerHeading.angle();   // Angle of the new heading with respect to X axis.
 
@@ -102,23 +100,20 @@ public class PlayerEntity
 
         nextPlayerVelocity.scl( BASE_VELOCITY );        // Applying the velocity magnitude
         nextPlayerVelocity.rotate(rotationAngle - 90);  // Rotating the vector to match the Sprite
-        nextPlayerVelocity.limit( MAX_SPEED );
         currentPlayerVelocity.set(nextPlayerVelocity);  // Update the current velocity
 
-        /*if (currentlyHaveCollision)
-        {
-            if (collisionUp && currentPlayerVelocity.y > 0)
-                currentPlayerVelocity.y = 0;
 
-            if (collisionDown && currentPlayerHeading.y < 0)
-                currentPlayerVelocity.y = 0;
+        if ( collisionUp && currentPlayerVelocity.y > 0 )
+        	currentPlayerVelocity.y = 0;
 
-            if (collisionLeft && currentPlayerHeading.x < 0)
-                currentPlayerVelocity.x = 0;
+        if ( collisionDown && currentPlayerHeading.y < 0 )
+        	currentPlayerVelocity.y = 0;
 
-            if (collisionRight && currentPlayerHeading.x > 0)
-                currentPlayerVelocity.x = 0;
-        }*/
+        if ( collisionLeft && currentPlayerHeading.x < 0 )
+        	currentPlayerVelocity.x = 0;
+
+        if ( collisionRight && currentPlayerHeading.x > 0 )
+            currentPlayerVelocity.x = 0;
 
         // Update World position, scaling velocity over timeSinceLastUpdate
         xCurrentWorldPosition += currentPlayerVelocity.x * timeSinceLastUpdate;
@@ -234,7 +229,7 @@ public class PlayerEntity
         return new Vector2(xPlayerOrigin, yPlayerOrigin);
     }
 
-    public float getWallSensorEndpointX(int i)
+    /*public float getWallSensorEndpointX(int i)
     {
         return wallSensor.getSensor(i).x + xCurrentWorldPosition + xPlayerOrigin;
     }
@@ -277,24 +272,19 @@ public class PlayerEntity
     public boolean getWallSensorCollisionValue(int index)
     {
         return wallSensor.getCollisionValue(index);
-    }
+    }*/
 
     public BoundingBox getBoundingBox()
     {
         return boundingBox;
     }
 
-    public void setCollisionDetection(boolean collisionUp, boolean collisionDown, boolean collisionLeft, boolean collisionRight)
+    public void setCollisionDetection( boolean collisionUp, boolean collisionDown, boolean collisionLeft, boolean collisionRight )
     {
         this.collisionUp = collisionUp;
         this.collisionDown = collisionDown;
         this.collisionLeft = collisionLeft;
         this.collisionRight = collisionRight;
-    }
-
-    public void setCollisionNotification(boolean currentlyHaveCollision)
-    {
-        this.currentlyHaveCollision = currentlyHaveCollision;
     }
 
     /*

@@ -26,18 +26,52 @@ public class CollisionDetector
     	GameEntity collidingEntity;
     	WallObject collidingWall;
     	
+    	boolean collisionLeft = false;
+    	boolean collisionRight = false;
+    	boolean collisionUp = false;
+    	boolean collisionDown = false;
+    	
     	// Checking player entity for collisions
     	collidingEntity = entityCollisionCheck( playerEntity.getBoundingBox() );
 		if ( collidingEntity != null )
 		{
-			//System.out.println( "Player is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
+			// Debug:
+			// System.out.println( "Player is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");		
 		}
+		
+    	collisionLeft = false;
+    	collisionRight = false;
+    	collisionUp = false;
+    	collisionDown = false;
 		
 		collidingWall = wallCollisionCheck( playerEntity.getBoundingBox() );
     	if ( collidingWall != null )
     	{
-    		//System.out.println("Player is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
+    		// Debug:
+    		// System.out.println("Player is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
+    		
+    		if ( leftCollision( playerEntity.getBoundingBox(), collidingWall.getBoundingBox() ) )
+    		{
+    			collisionLeft = true;
+    		}
+    		
+    		if ( rightCollision( playerEntity.getBoundingBox(), collidingWall.getBoundingBox() ) )
+    		{
+    			collisionRight = true;
+    		}
+    		
+    		if ( topCollision( playerEntity.getBoundingBox(), collidingWall.getBoundingBox() ) )
+    		{
+    			collisionUp = true;
+    		}
+    		
+    		if ( bottomCollision( playerEntity.getBoundingBox(), collidingWall.getBoundingBox() ) )
+    		{
+    			collisionDown = true;
+    		}
     	}
+    	
+    	playerEntity.setCollisionDetection( collisionUp, collisionDown, collisionLeft, collisionRight );
     	
     	// Checking each entity for collisions
     	for ( int i = 0; i < entityList.size(); i++ )
@@ -98,5 +132,46 @@ public class CollisionDetector
     	}
     	
     	return null;
+    }
+    
+    private boolean leftCollision( BoundingBox thisBoundingBox, BoundingBox otherBoundingBox )
+    {
+    	if ( ( thisBoundingBox.getX() < otherBoundingBox.getX() + otherBoundingBox.getWidth() ) && 
+    			( thisBoundingBox.getX() + thisBoundingBox.getWidth() > otherBoundingBox.getX() + otherBoundingBox.getWidth() ) )
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+    private boolean rightCollision( BoundingBox thisBoundingBox, BoundingBox otherBoundingBox )
+    {
+    	if ( ( thisBoundingBox.getX() < otherBoundingBox.getX() ) && thisBoundingBox.getX() + thisBoundingBox.getWidth() > otherBoundingBox.getX() )
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+    private boolean topCollision( BoundingBox thisBoundingBox, BoundingBox otherBoundingBox )
+    {
+    	if ( ( thisBoundingBox.getY() < otherBoundingBox.getY() ) && ( thisBoundingBox.getY() > otherBoundingBox.getY() - otherBoundingBox.getHeight() ) )
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+    private boolean bottomCollision( BoundingBox thisBoundingBox, BoundingBox otherBoundingBox )
+    {
+    	if ( ( thisBoundingBox.getY() - thisBoundingBox.getHeight() < otherBoundingBox.getY() ) && ( thisBoundingBox.getY() > otherBoundingBox.getY() ) )
+    	{
+    		return true;
+    	}
+    	
+    	return false;
     }
 }
