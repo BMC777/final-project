@@ -146,7 +146,7 @@ public class GameWorld
 
                 // Randomly generate value and weight of treasure
                 Random treasureValueGenerator = new Random();
-                int value = (treasureValueGenerator.nextInt(91)+10)*100; // Range: 100 - 1000
+                int value = (treasureValueGenerator.nextInt(91)+10)*10; // Range: 100 - 1000
                 //int weight = treasureValueGenerator.nextInt(10)+1; // Range: 1 - 10
 
                 treasureArrayList.add(new Treasure(new Vector2(x*TILE_DIMENSIONS, y*TILE_DIMENSIONS), new Vector2(TILE_DIMENSIONS, TILE_DIMENSIONS), value, value/100));

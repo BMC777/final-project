@@ -9,13 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sun.prism.image.ViewPort;
 
 /**
  * Created by Bryan on 1/21/2016.
@@ -127,10 +121,11 @@ public class GameRenderer
 
         renderTreasure();
         //renderGraphNodes();
-        renderAdjacentAgentSensors();
+        //renderAdjacentAgentSensors();
         renderGameEntities();
         renderPlayerEntity();
-        
+
+        /*/
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(1, 1, 0, 1 );
         
@@ -153,6 +148,7 @@ public class GameRenderer
         }
 
         shapeRenderer.end();
+        // */
 
     }
 
