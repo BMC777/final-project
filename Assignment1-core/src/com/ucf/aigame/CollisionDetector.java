@@ -92,22 +92,22 @@ public class CollisionDetector
 		
     	playerEntity.setCollisionDetection( collisionUp, collisionDown, collisionLeft, collisionRight );
     	
-    	/*
+    	
     	
     	// Checking each entity for collisions
     	for ( int i = 0; i < entityList.size(); i++ )
     	{
-    		collidingEntity = entityCollisionCheck( entityList.get(i).getBoundingBox() );
+    		/*collidingEntity = entityCollisionCheck( entityList.get(i).getBoundingBox() );
     		if ( collidingEntity != null )
     		{
     			//System.out.println( "Entity #" + i + " is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
-    		}
+    		}*/
     		
-    		collidingWall = wallCollisionCheck( entityList.get(i).getBoundingBox() );
+    		/*collidingWall = wallCollisionCheck( entityList.get(i).getBoundingBox() );
         	if ( collidingWall != null )
         	{
     			//System.out.println( "Entity #" + i + " is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
-        	}
+        	}*/
 
 			if ( entityList.get(i).getAdjacentAgentSensor().contains( playerEntity.getCenter() ) )
 			{
@@ -115,7 +115,7 @@ public class CollisionDetector
 			}
     	}
     	
-    	*/
+    	
     }
     
     private GameEntity entityCollisionCheck( BoundingBox boundingBox )

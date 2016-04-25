@@ -12,12 +12,8 @@ public class GameMain extends Game
 		//Load Textures/Sounds/etc. into game.
 		AssetLoader.load();		
 		//Creates a screen to display the game on.
-		try {
-			setScreen(new GameScreen());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		setScreen(new GameScreen());
+
 	}
 
 	@Override
