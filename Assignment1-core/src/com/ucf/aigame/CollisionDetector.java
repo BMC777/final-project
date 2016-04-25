@@ -42,7 +42,8 @@ public class CollisionDetector
 		if ( collidingEntity != null )
 		{
 			// Debug:
-			// System.out.println( "Player is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");		
+			// System.out.println( "Player is colliding with Entity #" + entityList.indexOf( collidingEntity ) + " in list!");
+			playerEntity.takeDamage(1);
 		}
 		
     	collisionLeft = false;
@@ -84,7 +85,7 @@ public class CollisionDetector
 		if ( collidingTreasure != null )
 		{
 			//System.out.println("Player is colliding with Treasure #" + treasureList.indexOf( collidingTreasure ) + " in list!");
-			System.out.println("Treasure Collected!");
+			//System.out.println("Treasure Collected!");
 			playerEntity.getBackpack().add( collidingTreasure );
 			treasureList.remove(collidingTreasure);
 		}

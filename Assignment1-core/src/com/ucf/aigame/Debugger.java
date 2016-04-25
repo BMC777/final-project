@@ -25,11 +25,11 @@ public class Debugger
         wallToolStatus = false;
         entityToolStatus = false;
 
-        //wallSensorLengthArray = new float[playerEntity.getWallSensorLengthArray().length];
+        /*/wallSensorLengthArray = new float[playerEntity.getWallSensorLengthArray().length];
         for (int i = 0; i < wallSensorLengthArray.length; i++)
         {
             wallSensorLengthArray[i] = 0;
-        }
+        } // */
     }
 
     public void update()
@@ -90,6 +90,6 @@ public class Debugger
 
     private void updateWallSensorLengthArray()
     {
-        wallSensorLengthArray = playerEntity.getWallSensorLengthArray();
+        //wallSensorLengthArray = playerEntity.getWallSensorLengthArray();
     }
 }
