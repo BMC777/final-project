@@ -122,13 +122,16 @@ public class GameRenderer
         
         for ( int i = 0; i < gameWorld.getEntityList().size(); i++ )
         {
-        	shapeRenderer.rect( gameWorld.getEntityList().get(i).getPositionVector().x, gameWorld.getEntityList().get(i).getPositionVector().y, TILE_DIMENSIONS, TILE_DIMENSIONS );
+        	shapeRenderer.rect( gameWorld.getEntityList().get(i).getBoundingBox().getX(), gameWorld.getEntityList().get(i).getBoundingBox().getY(), TILE_DIMENSIONS, TILE_DIMENSIONS );
         }
         
         for ( int i = 0; i < gameWorld.getWallList().size(); i++ )
         {
-        	shapeRenderer.rect( gameWorld.getWallList().get(i).getBoundingBox().getX(), gameWorld.getWallList().get(i).getBoundingBox().getY(), TILE_DIMENSIONS, TILE_DIMENSIONS );;
+        	shapeRenderer.rect( gameWorld.getWallList().get(i).getBoundingBox().getX(), gameWorld.getWallList().get(i).getBoundingBox().getY(), TILE_DIMENSIONS, TILE_DIMENSIONS );
         }
+        
+
+        shapeRenderer.rect( gameWorld.getPlayerEntity().getBoundingBox().getX(), gameWorld.getPlayerEntity().getBoundingBox().getY(), TILE_DIMENSIONS, TILE_DIMENSIONS );
 
         for (int i = 0; i < gameWorld.getTreasureArrayList().size(); i++)
         {

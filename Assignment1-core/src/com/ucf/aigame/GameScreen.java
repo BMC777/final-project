@@ -54,8 +54,10 @@ public class GameScreen implements Screen
     public void render(float delta)
     {
         runTime += delta;
+        
         gameWorld.update(delta);
         collisionDetector.update( gameWorld );
+        
         gameRenderer.render(runTime);
         //debugger.update();
     }

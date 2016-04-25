@@ -38,6 +38,8 @@ public class PlayerEntity
     private float yPlayerOrigin;
     private float xCurrentWorldPosition;
     private float yCurrentWorldPosition;
+    private float xPreviousWorldPosition;
+    private float yPreviousWorldPosition;
     //private int tile_dimensions;
 
     private float rotationAngle; //Angle between current and next Heading
@@ -75,7 +77,7 @@ public class PlayerEntity
         currentPlayerHeading = new Vector2( REFERENCE_VECTOR );		//Player always spawns facing 'East'
         nextPlayerHeading = new Vector2( currentPlayerHeading );
          
-        currentPlayerVelocity = new Vector2();						//Velocity is initially 0
+        currentPlayerVelocity = new Vector2();						// Velocity is initially 0
         nextPlayerVelocity = new Vector2( currentPlayerVelocity );
 
         //wallSensor = new WallSensor(playerWidth * 6);
@@ -108,20 +110,23 @@ public class PlayerEntity
         if ( collisionUp && currentPlayerVelocity.y > 0 )
         	currentPlayerVelocity.y = 0;
 
-        if ( collisionDown && currentPlayerHeading.y < 0 )
+        if ( collisionDown && currentPlayerVelocity.y < 0 )
         	currentPlayerVelocity.y = 0;
 
-        if ( collisionLeft && currentPlayerHeading.x < 0 )
+        if ( collisionLeft && currentPlayerVelocity.x < 0 )
         	currentPlayerVelocity.x = 0;
 
-        if ( collisionRight && currentPlayerHeading.x > 0 )
+        if ( collisionRight && currentPlayerVelocity.x > 0 )
             currentPlayerVelocity.x = 0;
 
         // Update World position, scaling velocity over timeSinceLastUpdate
+        xPreviousWorldPosition = xCurrentWorldPosition;
+        yPreviousWorldPosition = yCurrentWorldPosition;
+        
         xCurrentWorldPosition += currentPlayerVelocity.x * timeSinceLastUpdate;
         yCurrentWorldPosition += currentPlayerVelocity.y * timeSinceLastUpdate;
 
-        boundingBox.setPosition(xCurrentWorldPosition, yCurrentWorldPosition);
+        boundingBox.setPosition( xCurrentWorldPosition, yCurrentWorldPosition );
         // wallSensor.update(currentPlayerHeading);
 
         //radar.update(xCurrentWorldPosition + xPlayerOrigin, yCurrentWorldPosition + yPlayerOrigin);
@@ -325,4 +330,24 @@ public class PlayerEntity
     public AStarSearch getAStarSearch() {
         return aStarSearch;
     }*/
+    
+    public void setPlayerPositionX( float x )
+    {
+    	xCurrentWorldPosition = x;
+    }
+    
+    public void setPlayerPositionY( float y )
+    {
+    	yCurrentWorldPosition = y;
+    }
+    
+    public float getPreviousPlayerPositionX()
+    {
+    	return xPreviousWorldPosition;
+    }
+    
+    public float getPreviousPlayerPositionY()
+    {
+    	return yPreviousWorldPosition;
+    }
 }

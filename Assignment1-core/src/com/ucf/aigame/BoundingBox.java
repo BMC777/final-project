@@ -45,15 +45,17 @@ public class BoundingBox
 	
 	public boolean isBoundingBoxIntersecting( BoundingBox boundingBox )
 	{
-		if ( x < boundingBox.getX() + boundingBox.getWidth() &&
-			 x + width > boundingBox.getX() &&
-			 y < boundingBox.getY() + boundingBox.getHeight() &&
-			 y + height > boundingBox.getY() )
+		if ( x < boundingBox.getX() + boundingBox.getWidth() - 1 &&
+			 x + width - 1 > boundingBox.getX() &&
+			 y - height + 1 < boundingBox.getY() &&
+			 y > boundingBox.getY() - boundingBox.getHeight() + 1 )
 		{
 			return true;
 		}
 		
 		return false;
 	}
+	
+
 
 }

@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 public class CollisionDetector
 {
+	private static final int TILE_DIMENSIONS = 16;
+	
     private PlayerEntity playerEntity;
     private ArrayList<WallObject> wallList;
     private ArrayList<GameEntity> entityList;
@@ -27,7 +29,7 @@ public class CollisionDetector
 		treasureList = gameWorld.getTreasureArrayList();
     	
     	GameEntity collidingEntity;
-    	WallObject collidingWall;
+    	ArrayList<WallObject> collidingWalls;
 		Treasure collidingTreasure;
     	
     	boolean collisionLeft = false;
@@ -48,30 +50,33 @@ public class CollisionDetector
     	collisionUp = false;
     	collisionDown = false;
 		
-		collidingWall = wallCollisionCheck( playerEntity.getBoundingBox() );
-    	if ( collidingWall != null )
+		collidingWalls = wallCollisionCheck( playerEntity.getBoundingBox() );
+    	if ( !collidingWalls.isEmpty() )
     	{
     		// Debug:
     		// System.out.println("Player is colliding with Wall #" + wallList.indexOf( collidingWall ) + " in list!");
     		
-    		if ( leftCollision( playerEntity.getBoundingBox(), collidingWall.getBoundingBox() ) )
+    		for ( int i = 0; i < collidingWalls.size(); i++ )
     		{
-    			collisionLeft = true;
-    		}
+	    		if ( leftCollision( playerEntity.getBoundingBox(), collidingWalls.get(i).getBoundingBox() ) )
+	    		{
+	    			collisionLeft = true;
+	    		}
+	    		
+	    		if ( rightCollision( playerEntity.getBoundingBox(), collidingWalls.get(i).getBoundingBox() ) )
+	    		{
+	    			collisionRight = true;
+	    		}
     		
-    		if ( rightCollision( playerEntity.getBoundingBox(), collidingWall.getBoundingBox() ) )
-    		{
-    			collisionRight = true;
-    		}
-    		
-    		if ( topCollision( playerEntity.getBoundingBox(), collidingWall.getBoundingBox() ) )
-    		{
-    			collisionUp = true;
-    		}
-    		
-    		if ( bottomCollision( playerEntity.getBoundingBox(), collidingWall.getBoundingBox() ) )
-    		{
-    			collisionDown = true;
+	    		if ( topCollision( playerEntity.getBoundingBox(), collidingWalls.get(i).getBoundingBox() ) )
+	    		{
+	    			collisionUp = true;
+	    		}
+	    		
+	    		if ( bottomCollision( playerEntity.getBoundingBox(), collidingWalls.get(i).getBoundingBox() ) )
+	    		{
+	    			collisionDown = true;
+	    		}
     		}
     	}
 
@@ -85,6 +90,8 @@ public class CollisionDetector
 		}
 		
     	playerEntity.setCollisionDetection( collisionUp, collisionDown, collisionLeft, collisionRight );
+    	
+    	/*
     	
     	// Checking each entity for collisions
     	for ( int i = 0; i < entityList.size(); i++ )
@@ -106,6 +113,8 @@ public class CollisionDetector
 				entityList.get(i).setAlertion(true);
 			}
     	}
+    	
+    	*/
     }
     
     private GameEntity entityCollisionCheck( BoundingBox boundingBox )
@@ -134,17 +143,21 @@ public class CollisionDetector
 		return null;
 	}
     
-    private WallObject wallCollisionCheck( BoundingBox boundingBox )
+    private ArrayList<WallObject> wallCollisionCheck( BoundingBox boundingBox )
     {
+    	ArrayList<WallObject> collidingWalls = new ArrayList<WallObject>( wallList.size() );
+    	
     	for ( int i = 0; i < wallList.size(); i++ )
     	{
     		if ( boundingBox.isBoundingBoxIntersecting( wallList.get( i ).getBoundingBox() ) )
     		{
-    			return wallList.get( i );
+    			collidingWalls.add( wallList.get( i ) );
+    			
+    			//return wallList.get( i );
     		}
     	}
     	
-    	return null;
+    	return collidingWalls;
     }
     
     private boolean leftCollision( BoundingBox thisBoundingBox, BoundingBox otherBoundingBox )
