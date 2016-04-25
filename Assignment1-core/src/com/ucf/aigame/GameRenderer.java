@@ -67,14 +67,14 @@ public class GameRenderer
         floorMap = dungeonGenerator.getFloorMap();
 
         //false so y increases as it goes up instead of down, bottom left corner is coordinate (0,0)
-        camera.setToOrtho( false, 128, 128 );
+        camera.setToOrtho(false, 128, 128);
         
-        camera.position.set( gameWorld.getPlayerEntity().getCurrentXPosition(), gameWorld.getPlayerEntity().getCurrentYPosition(), 0 );
+        camera.position.set(gameWorld.getPlayerEntity().getCurrentXPosition(), gameWorld.getPlayerEntity().getCurrentYPosition(), 0);
         camera.update();
         
         //Telling SpriteBatch and shapeRenderer to use camera's coordinates when drawing Sprites
         batcher = new SpriteBatch();
-        batcher.setProjectionMatrix( camera.combined );
+        batcher.setProjectionMatrix(camera.combined);
 
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix( camera.combined );
@@ -119,11 +119,18 @@ public class GameRenderer
         
         batcher.end();
 
-        renderTreasure();
-        //renderGraphNodes();
-        //renderAdjacentAgentSensors();
-        renderGameEntities();
-        renderPlayerEntity();
+        if ( !playerEntity.isDead() ) {
+            renderTreasure();
+            //renderGraphNodes();
+            //renderAdjacentAgentSensors();
+            renderGameEntities();
+            renderPlayerEntity();
+            renderPlayerStats();
+        }
+        else {
+            renderGameOver();
+        }
+
 
         /*/
         shapeRenderer.begin(ShapeType.Line);
@@ -169,7 +176,7 @@ public class GameRenderer
         batcher.begin();
 
         //Drawing the playerEntityTexture
-        batcher.draw( playerEntityTextureRegion, playerEntity.getCurrentXPosition(), playerEntity.getCurrentYPosition() );
+        batcher.draw(playerEntityTextureRegion, playerEntity.getCurrentXPosition(), playerEntity.getCurrentYPosition());
 
         batcher.end();
     }
@@ -292,6 +299,66 @@ public class GameRenderer
             batcher.draw(treasureJewel, treasure.getPosition().x, treasure.getPosition().y,
                     treasure.getDimensions().x, treasure.getDimensions().y);
         }
+
+        batcher.end();
+    }
+
+    private void renderPlayerStats() {
+
+        float xOffset = playerEntity.getCenter().x + 60;
+        float yOffset = playerEntity.getCenter().y + 35;
+        float width = 60;
+        float height = 20;
+
+        // BOX
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        shapeRenderer.setColor(128/255f, 128/255f, 128/255f, 0.9f);
+        shapeRenderer.rect(xOffset, yOffset, width, height);
+
+        shapeRenderer.end();
+
+        // TREASURE VALUE */
+        batcher.begin();
+
+        bitmapFont.setColor(Color.YELLOW);
+        bitmapFont.draw(batcher, '$' + Float.toString(playerEntity.getBackpack().getValue()), xOffset, yOffset + 20);
+
+        batcher.end();
+
+        // HEALTH BAR
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.rect(xOffset-40, yOffset+2,
+                (playerEntity.getHealth() > 0)? playerEntity.getHealth(): 0, height/4);
+
+        shapeRenderer.end();
+
+    }
+
+    private void renderGameOver() {
+        float xOffset = playerEntity.getCenter().x - 150;
+        float yOffset = playerEntity.getCenter().y - 70;
+        float width = 270;
+        float height = 130;
+
+        // BOX
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.rect(xOffset, yOffset, width, height);
+
+        shapeRenderer.end();
+
+        // TREASURE VALUE */
+        batcher.begin();
+
+        bitmapFont.setColor(Color.RED);
+        bitmapFont.draw(batcher, "Game Over", playerEntity.getCenter().x - 40, playerEntity.getCenter().y);
+        bitmapFont.setColor(Color.YELLOW);
+        bitmapFont.draw(batcher, "Score Value: $"+Float.toString( playerEntity.getBackpack().getValue() ),
+                playerEntity.getCenter().x-70, playerEntity.getCenter().y-40);
 
         batcher.end();
     }

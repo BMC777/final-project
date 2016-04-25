@@ -31,6 +31,7 @@ public class PlayerEntity
     private int inputY;
 
     private int health;
+    private boolean isDead;
 
     // Global and local positioning
     //private float playerWidth;
@@ -86,6 +87,7 @@ public class PlayerEntity
         boundingBox = new BoundingBox(xCurrentWorldPosition, yCurrentWorldPosition, PLAYER_DIMENSIONS, PLAYER_DIMENSIONS);
 
         health = 100;
+        isDead = false;
         backpack = new Backpack();
         //radar = new AdjacentAgentSensor(playerWidth * 6, xCurrentWorldPosition+xPlayerOrigin, yCurrentWorldPosition+yPlayerOrigin);
         //pieSliceSensor = new PieSliceSensor(currentPlayerHeading, playerWidth * 6);
@@ -136,6 +138,10 @@ public class PlayerEntity
         //pieSliceSensor.update(currentPlayerHeading);
 
         // currentlyHaveCollision = false;
+
+        if (health <= 0) {
+            isDead = true;
+        }
     }
 
     //Updated by InputHandler
@@ -304,6 +310,10 @@ public class PlayerEntity
 
     public int getHealth() {
         return health;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 
     public void takeDamage(int damage) {
