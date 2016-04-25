@@ -32,8 +32,8 @@ public class GameEntity
     private float rotationAngle; //Angle between current and next Heading
 
     private static final Vector2 REFERENCE_VECTOR = new Vector2(1, 0);  //Normalized Vector pointing to 0 degrees
-    private static final float BASE_VELOCITY = 20;
-    private static final float MAX_SPEED = 60;
+    private static final float BASE_VELOCITY = 80;
+    private static final float MAX_SPEED = 100;
 
     GameEntity(Vector2 position, Vector2 dimensions, GameWorld gameWorld)
     {

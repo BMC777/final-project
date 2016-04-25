@@ -3,7 +3,6 @@ package com.ucf.aigame;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
 
 public class GameWorld
@@ -25,9 +24,9 @@ public class GameWorld
     public Vector2 goalLocation;
 
     // Spawn Limiters
-    private int monsterDelay = 20;
+    private int monsterDelay = 15;
     private int monsterDelayCounter = 0;
-    private int treasureDelay = 30;
+    private int treasureDelay = 25;
     private int treasureDelayCounter = 0;
 
     public GameWorld( float midPointX, float midPointY, float gameWidth, float gameHeight, DungeonGenerator dungeonGenerator )

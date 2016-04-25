@@ -262,7 +262,7 @@ public class Movement {
         headingToTarget.y = target.y - ( gameEntity.getPositionVector().y + gameEntity.getOriginVector().y );
 
         float angle = gameEntity.getEntityHeading().angle(headingToTarget);
-        float rotationSpeed = 1.3f;
+        float rotationSpeed = 2.0f; //1.3f;
 
         // Determine when is "close enough" when facing / seeking target
         float rotationError = rotationSpeed;

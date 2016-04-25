@@ -48,7 +48,7 @@ public class PlayerEntity
 
     //private Vector2 goalLocation;
 
-    private static final float BASE_VELOCITY = 125;
+    private static final float BASE_VELOCITY = 100;
     private static final Vector2 REFERENCE_VECTOR = new Vector2(1, 0);  //Normalized Vector pointing to 0 degrees
 
     //private static final float MAX_SPEED = 250;
