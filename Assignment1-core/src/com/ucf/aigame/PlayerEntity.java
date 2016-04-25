@@ -165,9 +165,18 @@ public class PlayerEntity
 
     public void rotateToFaceMouse(float xCurrentMousePosition, float yCurrentMousePosition)
     {
+    	System.out.println( "MouseX: " + xCurrentMousePosition );
+    	System.out.println( "MouseY: " + yCurrentMousePosition );
+    	
+    	System.out.println( "CurrentWorldPositionX: " + xCurrentWorldPosition );
+    	System.out.println( "CurrentWorldPositionY: " + yCurrentWorldPosition );
         //Determine the new heading vector offset by playerOrigin to align heading with center of sprite
-        nextPlayerHeading.x = xCurrentMousePosition - (xCurrentWorldPosition + xPlayerOrigin);
-        nextPlayerHeading.y = yCurrentMousePosition - (yCurrentWorldPosition + yPlayerOrigin);
+        nextPlayerHeading.x = xCurrentMousePosition - ( xCurrentWorldPosition + xPlayerOrigin );
+        nextPlayerHeading.y = yCurrentMousePosition - ( yCurrentWorldPosition + yPlayerOrigin );
+        
+        System.out.println( "HeadingX: " + nextPlayerHeading.x );
+        System.out.println( "HeadingY: " + nextPlayerHeading.y );
+        System.out.println();
 
         //Normalize the heading vector
         nextPlayerHeading.nor();

@@ -57,7 +57,7 @@ public class GameEntity
         // Collisions
         boundingBox = new BoundingBox( position.x, position.y, TILE_DIMENSIONS, TILE_DIMENSIONS );
         alerted = false;
-
+        
         // Sensors
         adjacentAgentSensor = new AdjacentAgentSensor(dimensions.x*2, centerOfEntity, gameWorld);
 

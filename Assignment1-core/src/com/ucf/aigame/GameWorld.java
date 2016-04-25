@@ -17,7 +17,6 @@ public class GameWorld
     
     private boolean[][] dungeonMap;
     private boolean[][] floorMap;
-    private LinkedList<CartesianPoint> doorList;
 
     private float gameWidth;
     private float gameHeight;
@@ -40,7 +39,6 @@ public class GameWorld
         this.gameHeight = gameHeight;
         dungeonMap = dungeonGenerator.getDungeonMap();
         floorMap = dungeonGenerator.getFloorMap();
-        doorList = dungeonGenerator.getDoorList();
 
         boolean summonedPlayer = false;
 
@@ -84,18 +82,6 @@ public class GameWorld
             gameEntityArrayList.get(i).update(delta);
         }
     }
-
-    /*public void newWall(float x, float y)
-    {
-        wallObjectArrayList.add(new WallObject(x * TILE_DIMENSIONS, y * TILE_DIMENSIONS,
-                TILE_DIMENSIONS, TILE_DIMENSIONS));
-    }
-
-    public void newEntity(float x, float y)
-    {
-        gameEntityArrayList.add(new GameEntity(x*TILE_DIMENSIONS - 16, y*TILE_DIMENSIONS - 16,
-                TILE_DIMENSIONS, TILE_DIMENSIONS));
-    }*/
 
     private void spawnEntity(int x, int y) {
 

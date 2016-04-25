@@ -1,7 +1,10 @@
 package com.ucf.aigame;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Bryan on 1/21/2016.
@@ -11,17 +14,13 @@ public class InputHandler implements InputProcessor
     private PlayerEntity playerEntity;
     private GameEntity gameEntity;
     private GameWorld gameWorld;
+    private OrthographicCamera camera;
 
-    public InputHandler( PlayerEntity playerEntity )
-    {
-        this.playerEntity = playerEntity;
-        //playerEntity.setController(this);
-    }
-
-    public InputHandler( PlayerEntity playerEntity, GameWorld gameWorld )
+    public InputHandler( PlayerEntity playerEntity, GameWorld gameWorld, OrthographicCamera camera )
     {
         this.playerEntity = playerEntity;
         this.gameWorld = gameWorld;
+        this.camera = camera;
     }
 
     @Override
@@ -126,7 +125,14 @@ public class InputHandler implements InputProcessor
     @Override
     public boolean mouseMoved(int screenX, int screenY)
     {
-    	playerEntity.rotateToFaceMouse(screenX, 640 - screenY);
+    	float x = screenX;
+    	float y = screenY;
+    	float z = 0;
+    	
+    	Vector3 mouseVector = new Vector3( x, y, z );
+    	camera.unproject( mouseVector );
+    	
+    	playerEntity.rotateToFaceMouse( mouseVector.x, mouseVector.y );
     	
         return true;
     }

@@ -2,6 +2,9 @@ package com.ucf.aigame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.io.IOException;
 
@@ -17,10 +20,13 @@ public class GameScreen implements Screen
     private GameRenderer gameRenderer;
     private CollisionDetector collisionDetector;
     private Debugger debugger;
+    
+    private OrthographicCamera camera;
+    private Viewport viewport;
 
     private float runTime;
 
-    public GameScreen() throws IOException
+    public GameScreen()
     {
         // Set dimensions
         float screenWidth = Gdx.graphics.getWidth();
@@ -34,12 +40,16 @@ public class GameScreen implements Screen
         gameWorld = new GameWorld( midPointX, midPointY, screenWidth, screenHeight, dungeonGenerator );
         collisionDetector = new CollisionDetector( gameWorld );
         //debugger = new Debugger( gameWorld );
-        gameRenderer = new GameRenderer( gameWorld, dungeonGenerator, debugger, screenWidth, screenHeight );
+        
+        camera = new OrthographicCamera();
+        viewport = new FitViewport( 256, 128, camera );
+        
+        gameRenderer = new GameRenderer( gameWorld, dungeonGenerator, camera, screenWidth, screenHeight );
 
         PlayerEntity playerEntity = gameWorld.getPlayerEntity();
 
         // For player input
-        InputHandler inputHandler = new InputHandler( playerEntity, gameWorld );
+        InputHandler inputHandler = new InputHandler( playerEntity, gameWorld, camera );
         Gdx.input.setInputProcessor( inputHandler );
 
     }
@@ -51,21 +61,22 @@ public class GameScreen implements Screen
     }
 
     @Override
-    public void render(float delta)
+    public void render( float delta )
     {
         runTime += delta;
         
-        gameWorld.update(delta);
-        collisionDetector.update( gameWorld );
         
-        gameRenderer.render(runTime);
+        gameWorld.update( delta );
+        collisionDetector.update( gameWorld );
+        camera.update();
+        gameRenderer.render( runTime );
         //debugger.update();
     }
 
     @Override
     public void resize(int width, int height)
     {
-
+    	viewport.update( width, height );
     }
 
     @Override

@@ -16,9 +16,8 @@ public class AssetLoader
 	
     public static Texture floorTileTexture;
     public static Texture wallTileTexture;
-    public static Texture gameEntityTexture;
-    public static Texture playerEntityTexture;
     public static Texture spriteSheet; // Each sprite is 16x16 bits, with 1 bit spacing between sprites.
+    public static Texture playerSheet;
 
     public static TextureRegion playerEntityTextureRegion;
     public static TextureRegion gameEntityTextureRegion;
@@ -44,23 +43,19 @@ public class AssetLoader
         // Retrieving Textures from assets folder
         floorTileTexture = new Texture(Gdx.files.internal("floor_tile"));
         wallTileTexture =  new Texture(Gdx.files.internal("wall_tile"));
-        gameEntityTexture = new Texture(Gdx.files.internal("game_entity"));
-        playerEntityTexture = new Texture(Gdx.files.internal("player"));
         spriteSheet = new Texture( Gdx.files.internal( "sprite_sheet"));
+        playerSheet = new Texture( Gdx.files.internal( "sprite_sheet_character" ) );
         treasureJewel = new Texture(Gdx.files.internal("jewel.png"));
 
         // Initialize TextureRegions
-        playerEntityTextureRegion = new TextureRegion(playerEntityTexture);
-        gameEntityTextureRegion = new TextureRegion(gameEntityTexture);
+        //playerEntityTextureRegion = new TextureRegion(playerEntityTexture);
+        gameEntityTextureRegion = new TextureRegion( playerSheet, 0, 4 + ( TILE_DIMENSIONS * 3 ), TILE_DIMENSIONS, TILE_DIMENSIONS );
+        
+        // Player initialization
+        playerEntityTextureRegion = new TextureRegion( playerSheet, 0, 0, TILE_DIMENSIONS, TILE_DIMENSIONS );
         
         // CaveWall initialization
         topMiddleCaveWall = new TextureRegion( spriteSheet, 11 + ( TILE_DIMENSIONS * 10), 0, TILE_DIMENSIONS, TILE_DIMENSIONS );
         dirtFloor3 = new TextureRegion( spriteSheet, 18 + ( TILE_DIMENSIONS * 17 ), 13 + ( TILE_DIMENSIONS * 12 ), TILE_DIMENSIONS, TILE_DIMENSIONS );
-    }
-
-    public static void dispose()
-    {
-        floorTileTexture.dispose();
-        wallTileTexture.dispose();
     }
 }
