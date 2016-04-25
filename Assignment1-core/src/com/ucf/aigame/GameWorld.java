@@ -26,9 +26,9 @@ public class GameWorld
     public Vector2 goalLocation;
 
     // Spawn Limiters
-    private int monsterDelay = 40;
+    private int monsterDelay = 20;
     private int monsterDelayCounter = 0;
-    private int treasureDelay = 50;
+    private int treasureDelay = 30;
     private int treasureDelayCounter = 0;
 
     public GameWorld( float midPointX, float midPointY, float gameWidth, float gameHeight, DungeonGenerator dungeonGenerator )
@@ -57,7 +57,7 @@ public class GameWorld
         		// Inserting walls into the gameWorld
         		if ( dungeonMap[y][x] )
         		{
-            		wallObjectArrayList.add( new WallObject( new BoundingBox( TILE_DIMENSIONS * x, TILE_DIMENSIONS * y, TILE_DIMENSIONS, TILE_DIMENSIONS ) ) );
+            		wallObjectArrayList.add( new WallObject( new BoundingBox( TILE_DIMENSIONS * x, TILE_DIMENSIONS * y, TILE_DIMENSIONS-1, TILE_DIMENSIONS-1 ) ) );
         		}
 
                 if ( floorMap[y][x] && !summonedPlayer )

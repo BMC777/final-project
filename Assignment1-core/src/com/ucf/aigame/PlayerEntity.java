@@ -31,7 +31,6 @@ public class PlayerEntity
     private int inputY;
 
     private int health;
-    private float weightThreshold;
 
     // Global and local positioning
     //private float playerWidth;
@@ -87,7 +86,6 @@ public class PlayerEntity
         boundingBox = new BoundingBox(xCurrentWorldPosition, yCurrentWorldPosition, PLAYER_DIMENSIONS, PLAYER_DIMENSIONS);
 
         health = 100;
-        weightThreshold = 10;
         backpack = new Backpack();
         //radar = new AdjacentAgentSensor(playerWidth * 6, xCurrentWorldPosition+xPlayerOrigin, yCurrentWorldPosition+yPlayerOrigin);
         //pieSliceSensor = new PieSliceSensor(currentPlayerHeading, playerWidth * 6);
