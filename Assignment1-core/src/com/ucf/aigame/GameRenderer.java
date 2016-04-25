@@ -30,15 +30,12 @@ public class GameRenderer
     private SpriteBatch batcher;
     private ShapeRenderer shapeRenderer;
     private BitmapFont bitmapFont;
-    private Debugger debugger;
     
     private boolean[][] dungeonMap;
     private boolean[][] floorMap;
 
     private TextureRegion playerEntityTextureRegion;
     private TextureRegion gameEntityTextureRegion;
-    private Texture floorTileTexture;
-    private Texture wallTileTexture;
 
     private PlayerEntity playerEntity;
     
@@ -166,10 +163,7 @@ public class GameRenderer
         {
             GameEntity entity = gameWorld.getEntityList().get(i);
 
-            batcher.draw(gameEntityTextureRegion, entity.getPositionVector().x, entity.getPositionVector().y,
-                    entity.getOriginVector().x, entity.getOriginVector().y,
-                    entity.getDimensionVector().x, entity.getDimensionVector().y,
-                    1, 1, entity.getRotationAngle());
+            batcher.draw( gameEntityTextureRegion, entity.getPositionVector().x, entity.getPositionVector().y );
         }
 
         batcher.end();
@@ -179,9 +173,7 @@ public class GameRenderer
         batcher.begin();
 
         //Drawing the playerEntityTexture
-        batcher.draw(playerEntityTextureRegion, playerEntity.getCurrentXPosition(), playerEntity.getCurrentYPosition(),
-                playerEntity.getXPlayerOrigin(), playerEntity.getYPlayerOrigin(), TILE_DIMENSIONS, TILE_DIMENSIONS,
-                1, 1, playerEntity.getRotationAngle());
+        batcher.draw( playerEntityTextureRegion, playerEntity.getCurrentXPosition(), playerEntity.getCurrentYPosition() );
 
         batcher.end();
     }
@@ -312,8 +304,6 @@ public class GameRenderer
     {
         playerEntityTextureRegion = AssetLoader.playerEntityTextureRegion;
         gameEntityTextureRegion = AssetLoader.gameEntityTextureRegion;
-        wallTileTexture = AssetLoader.wallTileTexture;
-        floorTileTexture = AssetLoader.floorTileTexture;
         
         topMiddleCaveWall = AssetLoader.topMiddleCaveWall;
         dirtFloor3 = AssetLoader.dirtFloor3;
