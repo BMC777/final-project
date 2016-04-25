@@ -30,6 +30,9 @@ public class PlayerEntity
     private int inputX;
     private int inputY;
 
+    private int health;
+    private float weightThreshold;
+
     // Global and local positioning
     //private float playerWidth;
     //private float playerHeight;
@@ -81,6 +84,8 @@ public class PlayerEntity
         //wallSensor = new WallSensor(playerWidth * 6);
         boundingBox = new BoundingBox(xCurrentWorldPosition, yCurrentWorldPosition, PLAYER_DIMENSIONS, PLAYER_DIMENSIONS);
 
+        health = 100;
+        weightThreshold = 10;
         backpack = new Backpack();
         //radar = new AdjacentAgentSensor(playerWidth * 6, xCurrentWorldPosition+xPlayerOrigin, yCurrentWorldPosition+yPlayerOrigin);
         //pieSliceSensor = new PieSliceSensor(currentPlayerHeading, playerWidth * 6);
@@ -100,10 +105,10 @@ public class PlayerEntity
             nextPlayerVelocity.scl(0.5f);               // Diagonal movement should not be faster
         }
 
-        nextPlayerVelocity.scl( BASE_VELOCITY );        // Applying the velocity magnitude
+        nextPlayerVelocity.scl(BASE_VELOCITY);        // Applying the velocity magnitude
         nextPlayerVelocity.rotate(rotationAngle - 90);  // Rotating the vector to match the Sprite
         currentPlayerVelocity.set(nextPlayerVelocity);  // Update the current velocity
-
+        currentPlayerVelocity.limit(BASE_VELOCITY - backpack.getWeight());
 
         if ( collisionUp && currentPlayerVelocity.y > 0 )
         	currentPlayerVelocity.y = 0;
@@ -283,6 +288,15 @@ public class PlayerEntity
 
     public Backpack getBackpack() {
         return backpack;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println("Player Health: "+health);
     }
 
     public void setCollisionDetection(boolean collisionUp, boolean collisionDown, boolean collisionLeft, boolean collisionRight)
